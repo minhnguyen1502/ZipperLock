@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/img_bg">
+
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:ellipsize="end"
+        android:fontFamily="@font/suez_one_regular"
+        android:gravity="start"
+        android:includeFontPadding="false"
+        android:lines="1"
+        android:maxLines="1"
+        android:text="Zipper Lock Screen"
+        android:textAllCaps="true"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@id/iv_gone"
+        app:layout_constraintEnd_toStartOf="@id/iv_gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/iv_gone" />
+
+    <ImageView
+        android:id="@+id/iv_gone"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="12dp"
+        android:padding="4dp"
+        android:src="@drawable/ic_setting"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/ctl_top"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:paddingHorizontal="12dp"
+        android:layout_marginTop="24dp"
+        android:paddingVertical="16dp"
+        app:layout_constraintTop_toBottomOf="@id/iv_gone"
+        android:background="@drawable/bg_enable_lock_scrren"
+        android:layout_marginHorizontal="24dp">
+        <ImageView
+            android:id="@+id/iv_start"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:padding="4dp"
+            android:src="@drawable/ic_key"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+        <ImageView
+            android:id="@+id/iv_enable"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:paddingVertical="2dp"
+            android:src="@drawable/img_sw_enable_off"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/iv_start"
+            app:layout_constraintEnd_toStartOf="@id/iv_enable"
+            android:text="Enable lock screen"
+            app:layout_constraintTop_toTopOf="@id/iv_start"
+            app:layout_constraintBottom_toBottomOf="@id/iv_start"
+            android:fontFamily="@font/roboto_bold_700"
+            android:layout_marginStart="12dp"
+            android:textColor="@color/black"
+            android:textSize="16sp"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycleView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="@id/ctl_top"
+        app:layout_constraintEnd_toEndOf="@id/ctl_top"
+        app:layout_constraintTop_toBottomOf="@id/ctl_top"
+        app:layout_constraintBottom_toTopOf="@id/ctl_end"
+        android:layout_marginVertical="16dp"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/ctl_end"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:paddingHorizontal="12dp"
+        android:layout_marginBottom="48dp"
+        android:paddingVertical="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="@drawable/bg_enable_lock_scrren"
+        android:layout_marginHorizontal="24dp">
+        <ImageView
+            android:id="@+id/iv_start_2"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:padding="4dp"
+            android:src="@drawable/ic_eye"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+        <ImageView
+            android:id="@+id/iv_end"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:padding="12dp"
+            android:layout_marginEnd="4dp"
+            android:src="@drawable/ic_right"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/iv_start_2"
+            app:layout_constraintEnd_toStartOf="@id/iv_end"
+            android:text="Enable lock screen"
+            app:layout_constraintTop_toTopOf="@id/iv_start_2"
+            app:layout_constraintBottom_toBottomOf="@id/iv_start_2"
+            android:fontFamily="@font/roboto_bold_700"
+            android:layout_marginStart="12dp"
+            android:textColor="@color/black"
+            android:textSize="16sp"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
