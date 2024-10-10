@@ -46,5 +46,25 @@
     <string name="sound_style">Sound Style</string>
     <string name="personalized">Personalized</string>
     <string name="wallpaper">Wallpaper</string>
+    <string name="set_zipper_sound">Set zipper sound</string>
+    <string name="zipper_sound">Zipper Sound</string>
+    <string name="set_sound_when_open">Set sound when open</string>
+    <string name="open_sound">Open Sound</string>
+    <string name="zipper_1">Zipper 1</string>
+    <string name="zipper_2">Zipper 2</string>
+    <string name="zipper_3">Zipper 3</string>
+    <string name="zipper_4">Zipper 4</string>
+    <string name="zipper_5">Zipper 5</string>
+    <string name="zipper_6">Zipper 6</string>
+    <string name="zipper_7">Zipper 7</string>
+    <string name="zipper_8">Zipper 8</string>
+    <string name="cat">Cat</string>
+    <string name="gun">Gun</string>
+    <string name="laughing">Laughing</string>
+    <string name="duck">Duck</string>
+    <string name="explosion">Explosion</string>
+    <string name="welcome">Welcome</string>
+    <string name="broken">Broken</string>
+    <string name="bell">Bell</string>
 
 </resources>

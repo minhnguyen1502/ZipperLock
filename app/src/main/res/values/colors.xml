@@ -11,5 +11,19 @@
     <color name="color_D82D25">#D82D25</color>
     <color name="color_3A5EA3">#3A5EA3</color>
 
+    <color name="color_sound_type_1">#06F0FF</color>
+    <color name="color_sound_type_2">#DDF001</color>
+    <color name="color_zip_1">#0F79B4</color>
+    <color name="color_zip_2">#066871</color>
+    <color name="color_zip_3">#6B0FB4</color>
+    <color name="color_zip_4">#B40F41</color>
+    <color name="color_zip_5">#B44A0F</color>
+    <color name="color_zip_6">#0FB420</color>
+    <color name="color_zip_7">#0FB4AA</color>
+    <color name="color_zip_8">#B40FA3</color>
+
+    <color name="color_open_list">#066871</color>
+    <color name="color_open_sound">#40066871</color>
+
     <color name="color_custom">#3DDBA4</color>
 </resources>

@@ -4,6 +4,7 @@
     <uses-permission
         android:name="android.permission.READ_EXTERNAL_STORAGE"
         android:maxSdkVersion="32" />
+    <uses-permission android:name="android.permission.SET_WALLPAPER" />
     <uses-permission
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         android:maxSdkVersion="32"
@@ -48,15 +49,7 @@
             android:name=".ui.permission.PermissionActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.item.background.BackgroundActivity"
-            android:exported="true"
-            android:screenOrientation="portrait"  >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+
         <activity
             android:name=".ui.main.MainActivity"
             android:exported="true"
@@ -66,6 +59,47 @@
             android:name=".ui.policy.PolicyActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.item.background.BackgroundActivity"
+            android:exported="true"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.item.zipper.ZipperActivity"
+            android:exported="true"
+            android:screenOrientation="portrait"  />
+        <activity
+            android:name=".ui.item.row.RowActivity"
+            android:exported="true"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.item.wallpaper.SetWallpaperActivity"
+            android:exported="true"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.successfully.SuccessfullyActivity"
+            android:exported="true"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.item.wallpaper.WallpaperActivity"
+            android:exported="true"
+            android:screenOrientation="portrait"  />
+        <activity
+            android:name=".ui.item.sound.SoundActivity"
+            android:exported="true"
+            android:screenOrientation="portrait"  />
+        <activity
+            android:name=".ui.item.sound.SoundTypeActivity"
+            android:exported="true"
+            android:screenOrientation="portrait"  />
+        <activity
+            android:name=".ui.item.personalized.PersonalizedActivity"
+            android:exported="true"
+            android:screenOrientation="portrait"  >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/img_bg">
+
+
+    <ImageView
+        android:id="@+id/iv_gone"
+        android:layout_width="0dp"
+        android:layout_height="200dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:src="@drawable/img_successfully"
+        android:layout_marginHorizontal="80dp"
+        android:layout_marginTop="76dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription" />
+    <TextView
+        android:id="@+id/txt"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Wallpaper has been set successfully."
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_gone"
+        android:layout_marginHorizontal="65dp"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/roboto_regular_400"
+        android:textSize="14sp"/>
+    <TextView
+        android:id="@+id/btn_back"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Back to home"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginHorizontal="40dp"
+        android:background="@drawable/bg_enable_lock_scrren"
+        android:gravity="center"
+        android:textSize="16sp"
+        android:layout_marginTop="24dp"
+        android:fontFamily="@font/roboto_bold_700"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toBottomOf="@id/txt"
+        android:paddingVertical="15dp"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
