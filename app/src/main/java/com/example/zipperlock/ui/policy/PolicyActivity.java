@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.view.View;
 
 import com.example.zipperlock.R;
+import com.example.zipperlock.ads.IsNetWork;
 import com.example.zipperlock.base.BaseActivity;
 import com.example.zipperlock.databinding.ActivityPolicyBinding;
 
@@ -22,15 +23,31 @@ public class PolicyActivity extends BaseActivity<ActivityPolicyBinding> {
 
         binding.webView.getSettings().setJavaScriptEnabled(true);
         binding.webView.loadUrl(linkPolicy);
+        if (IsNetWork.haveNetworkConnection(this)) {
+            binding.webView.setVisibility(View.VISIBLE);
+            binding.ivNoInternet.setVisibility(View.GONE);
+            binding.tvNoInternet.setVisibility(View.GONE);
+
+            binding.webView.getSettings().setJavaScriptEnabled(true);
+            binding.webView.loadUrl(linkPolicy);
+        } else {
+            binding.webView.setVisibility(View.GONE);
+            binding.ivNoInternet.setVisibility(View.VISIBLE);
+            binding.tvNoInternet.setVisibility(View.VISIBLE);
+
+            binding.webView.getSettings().setJavaScriptEnabled(true);
+            binding.webView.loadUrl(linkPolicy);
+            binding.ivBack.setOnClickListener(v -> onBack());
+        }
+        binding.ivBack.setOnClickListener(v -> onBack());
     }
 
     @Override
     public void bindView() {
-//        binding.viewTop.ivBack.setOnClickListener(v -> onBack());
     }
 
     @Override
     public void onBack() {
-        finishThisActivity();
+        finish();
     }
 }

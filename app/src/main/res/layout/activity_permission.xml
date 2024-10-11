@@ -93,7 +93,7 @@
                 app:layout_constraintTop_toBottomOf="@id/img" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/ll"
+                android:id="@+id/overlay"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
@@ -113,16 +113,94 @@
                     android:includeFontPadding="false"
                     android:lines="1"
                     android:maxLines="1"
-                    android:text="Allow access"
+                    android:text="Overlay access"
                     android:textSize="16sp"
                     android:textColor="@color/white"
-                    app:layout_constraintBottom_toBottomOf="@id/iv_sw_camera"
-                    app:layout_constraintEnd_toStartOf="@id/iv_sw_camera"
+                    app:layout_constraintBottom_toBottomOf="@id/iv_sw_overlay"
+                    app:layout_constraintEnd_toStartOf="@id/iv_sw_overlay"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/iv_sw_camera" />
+                    app:layout_constraintTop_toTopOf="@id/iv_sw_overlay" />
 
                 <ImageView
-                    android:id="@+id/iv_sw_camera"
+                    android:id="@+id/iv_sw_overlay"
+                    android:layout_width="52dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/img_sw_off"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="ContentDescription" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/noti"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="8dp"
+                android:padding="16dp"
+                android:background="@drawable/bg_btn_permission"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/overlay">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/roboto_medium_500"
+                    android:textStyle="bold"
+                    android:includeFontPadding="false"
+                    android:lines="1"
+                    android:maxLines="1"
+                    android:text="Notification access"
+                    android:textSize="16sp"
+                    android:textColor="@color/white"
+                    app:layout_constraintBottom_toBottomOf="@id/iv_sw_noti"
+                    app:layout_constraintEnd_toStartOf="@id/iv_sw_noti"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/iv_sw_noti" />
+
+                <ImageView
+                    android:id="@+id/iv_sw_noti"
+                    android:layout_width="52dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/img_sw_off"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="ContentDescription" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/media"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="8dp"
+                android:padding="16dp"
+                android:background="@drawable/bg_btn_permission"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/noti">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/roboto_medium_500"
+                    android:textStyle="bold"
+                    android:includeFontPadding="false"
+                    android:lines="1"
+                    android:maxLines="1"
+                    android:text="Media access"
+                    android:textSize="16sp"
+                    android:textColor="@color/white"
+                    app:layout_constraintBottom_toBottomOf="@id/iv_sw_media"
+                    app:layout_constraintEnd_toStartOf="@id/iv_sw_media"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/iv_sw_media" />
+
+                <ImageView
+                    android:id="@+id/iv_sw_media"
                     android:layout_width="52dp"
                     android:layout_height="32dp"
                     android:src="@drawable/img_sw_off"

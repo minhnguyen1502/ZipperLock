@@ -12,6 +12,7 @@ public class SPUtils {
     public static final String ROW = "ROW";
     public static final String WALLPAPER = "WALLPAPER";
     public static final String OPEN = "OPEN";
+    public static final String NOTIFICATION = "NOTIFICATION";
 
 
     public static SharedPreferences getPref(Context context) {
