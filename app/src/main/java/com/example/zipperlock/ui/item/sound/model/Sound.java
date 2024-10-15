@@ -6,9 +6,9 @@ public class Sound {
     private int color_item;
     private int color_list;
     private int sound;
-    private String type;
+    private int type;
 
-    public Sound(int img, int name, int color_item, int color_list, int sound, String type) {
+    public Sound(int img, int name, int color_item, int color_list, int sound, int type) {
         this.img = img;
         this.name = name;
         this.color_item = color_item;
@@ -57,11 +57,11 @@ public class Sound {
         this.color_list = color_list;
     }
 
-    public String getType() {
+    public int getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(int type) {
         this.type = type;
     }
 }

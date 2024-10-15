@@ -1,10 +1,13 @@
 package com.example.zipperlock.ui.item.zipper;
 
+import android.content.Intent;
+
 import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.example.zipperlock.R;
 import com.example.zipperlock.base.BaseActivity;
 import com.example.zipperlock.databinding.ActivityListItemBinding;
+import com.example.zipperlock.ui.apply.ApplyActivity;
 import com.example.zipperlock.ui.item.background.adapter.BackgroundAdapter;
 import com.example.zipperlock.ui.item.zipper.adapter.ZipperAdapter;
 import com.example.zipperlock.ui.item.zipper.model.Zipper;
@@ -55,6 +58,7 @@ public class ZipperActivity extends BaseActivity<ActivityListItemBinding> {
 
     @Override
     public void bindView() {
+        binding.ivBack.setOnClickListener(v -> onBack());
 
     }
     private ZipperAdapter getAdapter(int currentBackground) {
@@ -66,12 +70,14 @@ public class ZipperActivity extends BaseActivity<ActivityListItemBinding> {
             }
         }
         return new ZipperAdapter(this, listItems,selectedPosition,  (position, zipper) -> {
-            SPUtils.setInt(this, SPUtils.ZIPPER, zipper.getImg());
+            Intent i = new Intent(this, ApplyActivity.class);
+            i.putExtra("zipper", zipper.getImg());
+            startActivity(i);
         });
     }
 
     @Override
     public void onBack() {
-
+        finish();
     }
 }

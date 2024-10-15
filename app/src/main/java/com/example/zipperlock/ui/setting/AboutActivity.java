@@ -19,10 +19,7 @@ public class AboutActivity extends BaseActivity<ActivityAboutBinding> {
 
         binding.ivBack.setOnClickListener(v -> onBack());
 
-        binding.tvPolicy.setOnClickListener(v -> {
-
-            startActivity(new Intent(AboutActivity.this, PolicyActivity.class));
-        });
+        binding.tvPolicy.setOnClickListener(v -> startActivity(new Intent(AboutActivity.this, PolicyActivity.class)));
     }
 
     @Override

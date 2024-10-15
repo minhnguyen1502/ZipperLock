@@ -22,13 +22,13 @@
         android:textAllCaps="true"
         android:textColor="@color/white"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="@id/iv_gone"
-        app:layout_constraintEnd_toStartOf="@id/iv_gone"
+        app:layout_constraintBottom_toBottomOf="@id/iv_check"
+        app:layout_constraintEnd_toStartOf="@id/iv_check"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/iv_gone" />
+        app:layout_constraintTop_toTopOf="@id/iv_check" />
 
     <ImageView
-        android:id="@+id/iv_gone"
+        android:id="@+id/iv_check"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginTop="4dp"
@@ -49,5 +49,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iv_gone" />
+        app:layout_constraintTop_toBottomOf="@id/iv_check" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -40,6 +40,7 @@ public class PersonalizedActivity extends BaseActivity<ActivityListItemBinding> 
 
     @Override
     public void bindView() {
+        binding.ivBack.setOnClickListener(v -> onBack());
 
     }
     private List<Uri> getAllImages() {
@@ -78,6 +79,6 @@ public class PersonalizedActivity extends BaseActivity<ActivityListItemBinding> 
     }
     @Override
     public void onBack() {
-
+        finish();
     }
 }

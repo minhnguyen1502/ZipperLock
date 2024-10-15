@@ -1,10 +1,14 @@
 package com.example.zipperlock.ui.item.background;
 
+import android.content.Intent;
+import android.widget.Toast;
+
 import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.example.zipperlock.R;
 import com.example.zipperlock.base.BaseActivity;
 import com.example.zipperlock.databinding.ActivityListItemBinding;
+import com.example.zipperlock.ui.apply.ApplyActivity;
 import com.example.zipperlock.ui.item.background.adapter.BackgroundAdapter;
 import com.example.zipperlock.ui.item.background.model.Background;
 import com.example.zipperlock.ui.main.adapter.ItemAdapter;
@@ -15,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BackgroundActivity extends BaseActivity<ActivityListItemBinding> {
-
+    int currentBackground;
     private List<Background> listItems;
     @Override
     public ActivityListItemBinding getBinding() {
@@ -24,6 +28,7 @@ public class BackgroundActivity extends BaseActivity<ActivityListItemBinding> {
 
     @Override
     public void initView() {
+        currentBackground = SPUtils.getInt(this, SPUtils.BG, -1);
 
         listItems = new ArrayList<>();
         listItems.add(new Background( R.drawable.img_bg_01));
@@ -46,8 +51,12 @@ public class BackgroundActivity extends BaseActivity<ActivityListItemBinding> {
         listItems.add(new Background( R.drawable.img_bg_18));
         listItems.add(new Background( R.drawable.img_bg_19));
         listItems.add(new Background( R.drawable.img_bg_20));
-        int currentBackground = SPUtils.getInt(this, SPUtils.BG, -1);
-        BackgroundAdapter adapter = getBackgroundAdapter(currentBackground);
+
+        BackgroundAdapter adapter = new BackgroundAdapter(this, listItems,  (position, backgroundModel) -> {
+            Intent i = new Intent(this, ApplyActivity.class);
+            i.putExtra("background", backgroundModel.getImg());
+            startActivity(i);
+        });
         binding.recycleView.setAdapter(adapter);
         binding.recycleView.setLayoutManager(new GridLayoutManager(this, 2));
 
@@ -55,22 +64,17 @@ public class BackgroundActivity extends BaseActivity<ActivityListItemBinding> {
 
     @Override
     public void bindView() {
-
+        binding.ivBack.setOnClickListener(v -> onBack());
     }
-        private BackgroundAdapter getBackgroundAdapter(int currentBackground) {
-            int selectedPosition = 3;
-            for (int i = 0; i < listItems.size(); i++) {
-                if (listItems.get(i).getImg() == currentBackground) {
-                    selectedPosition = i;
-                    break;
-                }
-            }
-            return new BackgroundAdapter(this, listItems,selectedPosition,  (position, backgroundModel) -> {
-                SPUtils.setInt(this, SPUtils.BG, backgroundModel.getImg());
-            });
-        }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
     @Override
     public void onBack() {
-
+        finish();
     }
 }

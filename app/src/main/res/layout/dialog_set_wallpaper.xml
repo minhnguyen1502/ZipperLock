@@ -14,86 +14,120 @@
         android:id="@+id/title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Set Wallpaper"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="24dp"
         android:fontFamily="@font/roboto_bold_700"
+        android:text="Set Wallpaper"
         android:textColor="@color/black"
         android:textSize="20sp"
-        android:layout_marginTop="24dp"
-        android:layout_marginHorizontal="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
+
     <View
         android:id="@+id/view"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#E3E3E3"
-        app:layout_constraintTop_toBottomOf="@id/title"
         android:layout_marginTop="17dp"
+        android:background="#E3E3E3"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
-    <ImageView
+        app:layout_constraintTop_toBottomOf="@id/title" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/home"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:padding="12dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="8dp"
-        android:src="@drawable/ic_dialog_wallpaper_home"
-        app:layout_constraintTop_toBottomOf="@id/view"
-        app:layout_constraintStart_toStartOf="parent"/>
-    <TextView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Home Screen"
-        app:layout_constraintTop_toTopOf="@id/home"
-        app:layout_constraintBottom_toBottomOf="@id/home"
-        app:layout_constraintStart_toEndOf="@id/home"
         app:layout_constraintEnd_toEndOf="parent"
-        android:fontFamily="@font/roboto_medium_500"
-        android:textSize="16sp"
-        android:textColor="@color/black"/>
-    <ImageView
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view">
+
+        <ImageView
+            android:id="@+id/iv_home"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="8dp"
+            android:padding="12dp"
+            android:src="@drawable/ic_dialog_wallpaper_home"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_medium_500"
+            android:text="Home Screen"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@id/iv_home"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/iv_home"
+            app:layout_constraintTop_toTopOf="@id/iv_home" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/lock"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:padding="12dp"
-        android:layout_marginStart="4dp"
-        android:src="@drawable/ic_dialog_wallpaper_lock"
-        app:layout_constraintTop_toBottomOf="@id/home"
-        app:layout_constraintStart_toStartOf="parent"/>
-    <TextView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Lock Screen"
-        app:layout_constraintTop_toTopOf="@id/lock"
-        app:layout_constraintBottom_toBottomOf="@id/lock"
-        app:layout_constraintStart_toEndOf="@id/lock"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:fontFamily="@font/roboto_medium_500"
-        android:textSize="16sp"
-        android:textColor="@color/black"/>
-    <ImageView
+        app:layout_constraintTop_toBottomOf="@id/home">
+        <ImageView
+            android:id="@+id/iv_lock"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="4dp"
+            android:padding="12dp"
+            android:src="@drawable/ic_dialog_wallpaper_lock"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_medium_500"
+            android:text="Lock Screen"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@id/iv_lock"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/iv_lock"
+            app:layout_constraintTop_toTopOf="@id/iv_lock" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/both"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:padding="12dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginBottom="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:src="@drawable/ic_dialog_wallpaper_phone"
-        app:layout_constraintTop_toBottomOf="@id/lock"
-        app:layout_constraintStart_toStartOf="parent"/>
-    <TextView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Home Screen and Lock Screen"
-        app:layout_constraintTop_toTopOf="@id/both"
-        app:layout_constraintBottom_toBottomOf="@id/both"
-        app:layout_constraintStart_toEndOf="@id/both"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:fontFamily="@font/roboto_medium_500"
-        android:textSize="16sp"
-        android:textColor="@color/black"/>
-    
+        app:layout_constraintTop_toBottomOf="@id/lock">
+        <ImageView
+            android:id="@+id/iv_both"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginBottom="20dp"
+            android:padding="12dp"
+            android:src="@drawable/ic_dialog_wallpaper_phone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_medium_500"
+            android:text="Home Screen and Lock Screen"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@id/iv_both"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/iv_both"
+            app:layout_constraintTop_toTopOf="@id/iv_both" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

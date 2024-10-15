@@ -65,24 +65,27 @@
         app:layout_constraintStart_toStartOf="@id/phone"
         app:layout_constraintTop_toTopOf="@id/phone"
         app:riv_corner_radius="24dp" />
-<ImageView
-    android:layout_width="0dp"
-    android:layout_height="0dp"
-    android:src="@drawable/img_row_1"
-    android:paddingVertical="4dp"
-    app:layout_constraintEnd_toEndOf="@id/bg"
-    app:layout_constraintStart_toStartOf="@id/bg"
-    app:layout_constraintTop_toTopOf="@id/bg"
-    app:layout_constraintBottom_toBottomOf="@id/bg"/>
-    <ImageView
-        android:layout_width="0dp"
-        android:layout_height="140dp"
-        android:src="@drawable/img_zipper_19"
-    android:layout_marginTop="4dp"
-        app:layout_constraintStart_toStartOf="@id/bg"
-        app:layout_constraintEnd_toEndOf="@id/bg"
-        app:layout_constraintTop_toTopOf="@id/bg"/>
 
+    <ImageView
+        android:id="@+id/row"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:paddingVertical="4dp"
+        android:src="@drawable/img_row_1"
+        app:layout_constraintBottom_toBottomOf="@id/bg"
+        app:layout_constraintEnd_toEndOf="@id/bg"
+        app:layout_constraintStart_toStartOf="@id/bg"
+        app:layout_constraintTop_toTopOf="@id/bg" />
+
+    <ImageView
+        android:id="@+id/zip"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="4dp"
+        android:src="@drawable/img_zipper_14"
+        app:layout_constraintEnd_toEndOf="@id/bg"
+        app:layout_constraintStart_toStartOf="@id/bg"
+        app:layout_constraintTop_toTopOf="@id/bg" />
 
 
     <TextView
@@ -137,10 +140,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:fontFamily="@font/roboto_medium_500"
+            android:gravity="center"
             android:text="Background"
             android:textColor="@color/white"
             android:textSize="12sp"
-            android:gravity="center"
             app:layout_constraintEnd_toEndOf="@id/img"
             app:layout_constraintStart_toStartOf="@id/img"
             app:layout_constraintTop_toBottomOf="@id/img" />
@@ -169,10 +172,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:fontFamily="@font/roboto_medium_500"
+            android:gravity="center"
             android:text="Background"
             android:textColor="@color/white"
             android:textSize="12sp"
-            android:gravity="center"
 
             app:layout_constraintEnd_toEndOf="@id/img2"
             app:layout_constraintStart_toStartOf="@id/img2"
@@ -202,9 +205,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:fontFamily="@font/roboto_medium_500"
+            android:gravity="center"
             android:text="Background"
             android:textColor="@color/white"
-            android:gravity="center"
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="@id/img3"
             app:layout_constraintStart_toStartOf="@id/img3"
@@ -235,9 +238,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:fontFamily="@font/roboto_medium_500"
+            android:gravity="center"
             android:text="Background"
             android:textColor="@color/white"
-            android:gravity="center"
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="@id/img4"
             app:layout_constraintStart_toStartOf="@id/img4"

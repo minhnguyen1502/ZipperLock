@@ -94,7 +94,6 @@ public class SetWallpaperActivity extends BaseActivity<ActivitySetWallpaperBindi
                 wallpaperManager.setBitmap(bitmap, null, true, WallpaperManager.FLAG_SYSTEM);
                 startActivity(new Intent(this, SuccessfullyActivity.class));
             }
-//            Toast.makeText(this, "Home screen wallpaper set successfully", Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
             e.printStackTrace();
             Toast.makeText(this, "Failed to set home screen wallpaper", Toast.LENGTH_SHORT).show();
@@ -108,7 +107,6 @@ public class SetWallpaperActivity extends BaseActivity<ActivitySetWallpaperBindi
                 InputStream inputStream = getResources().openRawResource(wallpaperResId);
                 wallpaperManager.setStream(inputStream, null, true, WallpaperManager.FLAG_LOCK);
                 startActivity(new Intent(this, SuccessfullyActivity.class));
-//                Toast.makeText(this, "Lock screen wallpaper set successfully", Toast.LENGTH_SHORT).show();
             } catch (IOException e) {
                 e.printStackTrace();
                 Toast.makeText(this, "Failed to set lock screen wallpaper", Toast.LENGTH_SHORT).show();

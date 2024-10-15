@@ -35,33 +35,24 @@ public class SettingActivity extends BaseActivity<ActivitySettingBinding> {
 
     @Override
     public void bindView() {
-        binding.btnAbout.setOnClickListener(v -> {
+        binding.btnAbout.setOnClickListener(v -> startActivity(new Intent(this, AboutActivity.class)));
 
-            startActivity(new Intent(this, AboutActivity.class));
-        });
+        if (SharePrefUtils.isRated(this)) binding.btnRate.setVisibility(View.GONE);
 
-        if (SharePrefUtils.isRated(this)) {
-            binding.btnRate.setVisibility(View.GONE);
-        }
+        binding.btnLanguage.setOnClickListener(v -> startActivity(new Intent(this, LanguageActivity.class)));
 
-        binding.btnLanguage.setOnClickListener(v -> {
+        binding.btnRate.setOnClickListener(v -> rate());
 
-            startActivity(new Intent(this, LanguageActivity.class));
-        });
+        binding.btnShare.setOnClickListener(v -> share());
 
-        binding.btnRate.setOnClickListener(v -> {
-                rate();
-        });
-
-        binding.btnShare.setOnClickListener(v -> {
-            share();
-        });
+        binding.ivBack.setOnClickListener(v -> onBack());
     }
 
     @Override
     public void onBack() {
 
     }
+
     private String getLanguageNameByCode(String code) {
         switch (code) {
             case "en":
@@ -94,6 +85,7 @@ public class SettingActivity extends BaseActivity<ActivitySettingBinding> {
         binding.btnShare.postDelayed(() -> binding.btnShare.setEnabled(true), 500);
 
     }
+
     ReviewInfo reviewInfo;
     ReviewManager manager;
 

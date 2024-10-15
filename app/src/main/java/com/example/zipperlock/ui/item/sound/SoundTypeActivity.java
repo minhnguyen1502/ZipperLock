@@ -28,10 +28,14 @@ public class SoundTypeActivity extends BaseActivity<ActivitySoundTypeBinding> {
         listItems.add(new SoundType(R.string.zipper_sound, R.string.set_zipper_sound,R.drawable.bg_soundtype_1, R.drawable.img_zip));
         listItems.add(new SoundType(R.string.open_sound, R.string.set_sound_when_open,R.drawable.bg_soundtype_2, R.drawable.img_open));
         SoundTypeAdapter adapter = new SoundTypeAdapter(this, listItems,  (position, soundType) -> {
-            startActivity(new Intent(this, SoundActivity.class));
+            Intent i = new Intent(this, SoundActivity.class);
+            i.putExtra("position", position);
+            startActivity(i);
         });
         binding.recycleView.setAdapter(adapter);
         binding.recycleView.setLayoutManager(new GridLayoutManager(this,1));
+        binding.ivBack.setOnClickListener(v -> onBack());
+
     }
 
     @Override

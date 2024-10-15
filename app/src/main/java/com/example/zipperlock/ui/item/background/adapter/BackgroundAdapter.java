@@ -23,10 +23,9 @@ public class BackgroundAdapter extends RecyclerView.Adapter<BackgroundAdapter.It
     private final Context context;
     private int selectedPosition;
 
-    public BackgroundAdapter(Context context, List<Background> backgroundList, int selectedPosition, ClickItem clickItem) {
+    public BackgroundAdapter(Context context, List<Background> backgroundList, ClickItem clickItem) {
         this.context = context;
         this.listItem = backgroundList;
-        this.selectedPosition = selectedPosition; // Initialize it
         this.clickItem = clickItem;
     }
 
@@ -47,9 +46,7 @@ public class BackgroundAdapter extends RecyclerView.Adapter<BackgroundAdapter.It
         } else {
             holder.binding.choose.setVisibility(View.INVISIBLE);
         }
-        holder.binding.img.setOnClickListener(v -> {
-            selectedPosition = position;
-            notifyDataSetChanged();
+        holder.itemView.setOnClickListener(v -> {
             clickItem.clickItem(position, background);
         });
     }

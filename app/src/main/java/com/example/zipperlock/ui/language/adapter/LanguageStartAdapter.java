@@ -11,6 +11,7 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -49,11 +50,9 @@ public class LanguageStartAdapter extends RecyclerView.Adapter<LanguageStartAdap
         holder.tvLang.setText(languageModel.getName());
 
         if (languageModel.getActive()) {
-            holder.layoutItem.setBackgroundResource(R.drawable.bg_lang_item_s);
-            holder.tvLang.setTextColor(context.getColor(R.color.color_D82D25));
+            holder.item.setBackgroundResource(R.drawable.bg_lang_item_s);
         } else {
-            holder.layoutItem.setBackgroundResource(R.drawable.bg_lang_item_sn);
-            holder.tvLang.setTextColor(context.getColor(R.color.color_3A5EA3));
+            holder.item.setBackgroundResource(R.drawable.bg_lang_item_sn);
         }
 
         switch (languageModel.getCode()) {
@@ -83,7 +82,7 @@ public class LanguageStartAdapter extends RecyclerView.Adapter<LanguageStartAdap
                 break;
         }
 
-        holder.layoutItem.setOnClickListener(v -> {
+        holder.item.setOnClickListener(v -> {
             setCheck(languageModel.getCode());
             iClickItemLanguage.onClickItemLanguage(languageModel.getCode());
             notifyDataSetChanged();
@@ -102,14 +101,13 @@ public class LanguageStartAdapter extends RecyclerView.Adapter<LanguageStartAdap
 
     public static class LanguageViewHolder extends RecyclerView.ViewHolder {
         private final TextView tvLang;
-        private final LinearLayout layoutItem;
         private final ImageView icLang;
-
+        private final ConstraintLayout item;
         public LanguageViewHolder(@NonNull View itemView) {
             super(itemView);
             icLang = itemView.findViewById(R.id.icLang);
             tvLang = itemView.findViewById(R.id.tvLang);
-            layoutItem = itemView.findViewById(R.id.layoutItem);
+            item = itemView.findViewById(R.id.item);
         }
     }
 

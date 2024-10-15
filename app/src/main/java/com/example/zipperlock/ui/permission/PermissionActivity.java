@@ -5,18 +5,30 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Build;
+import android.provider.Settings;
+import android.view.Gravity;
 import android.view.View;
+import android.widget.RelativeLayout;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.example.zipperlock.R;
 import com.example.zipperlock.base.BaseActivity;
 import com.example.zipperlock.databinding.ActivityPermissionBinding;
+import com.example.zipperlock.databinding.DialogPermissionBinding;
 import com.example.zipperlock.ui.main.MainActivity;
 import com.example.zipperlock.util.SPUtils;
 import com.example.zipperlock.util.SharePrefUtils;
+import com.example.zipperlock.util.SystemUtil;
 
 public class PermissionActivity extends BaseActivity<ActivityPermissionBinding> {
     private final int REQUEST_CODE_STORAGE_PERMISSION = 124;
@@ -39,26 +51,31 @@ public class PermissionActivity extends BaseActivity<ActivityPermissionBinding> 
 
     @Override
     public void bindView() {
-        binding.tvContinue.setOnClickListener(v -> {
-            startNextActivity();
+        binding.tvContinue.setOnClickListener(v -> startNextActivity());
+
+        binding.ivSwNoti.setOnClickListener(view -> {
+            if (!checkNotificationPermission()) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    ActivityCompat.requestPermissions(PermissionActivity.this, new String[]{Manifest.permission.POST_NOTIFICATIONS}, REQUEST_CODE_NOTIFICATION_PERMISSION);
+                }
+            }
         });
-//        binding.tvReadNotifi.setOnClickListener(view -> {
-//            if (!checkNotificationPermission()) {
-//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-//                    ActivityCompat.requestPermissions(PermissionActivity.this, new String[]{Manifest.permission.POST_NOTIFICATIONS}, REQUEST_CODE_NOTIFICATION_PERMISSION);
-//                }
-//            }
-//        });
-//
-//        binding.tvRead.setOnClickListener(view -> {
-//            if (!checkStoragePermission()) {
-//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-//                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_MEDIA_IMAGES, Manifest.permission.READ_MEDIA_VIDEO, Manifest.permission.READ_MEDIA_AUDIO}, REQUEST_CODE_STORAGE_PERMISSION);
-//                } else {
-//                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CODE_STORAGE_PERMISSION);
-//                }
-//            }
-//        });
+
+        binding.ivSwOverlay.setOnClickListener(v -> {
+            if (!checkOverlayPermission()) {
+                showDialogGotoSetting(3);
+            }
+        });
+
+        binding.ivSwMedia.setOnClickListener(view -> {
+            if (!checkStoragePermission()) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_MEDIA_IMAGES, Manifest.permission.READ_MEDIA_VIDEO, Manifest.permission.READ_MEDIA_AUDIO}, REQUEST_CODE_STORAGE_PERMISSION);
+                } else {
+                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CODE_STORAGE_PERMISSION);
+                }
+            }
+        });
     }
     private void startNextActivity() {
         SharePrefUtils.increaseCountFirstHelp(this);
@@ -132,7 +149,7 @@ public class PermissionActivity extends BaseActivity<ActivityPermissionBinding> 
                             SPUtils.setInt(this, SPUtils.STORAGE, countStorage);
                             if (countStorage > 1) {
                                 if (!isShowDialog) {
-                                    showDialogGotoSetting(3);
+                                    showDialogGotoSetting(1);
                                 }
                             }
                         }
@@ -141,20 +158,118 @@ public class PermissionActivity extends BaseActivity<ActivityPermissionBinding> 
             }
         }
     }
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    private void showDialogGotoSetting(int type) {
+        dialog = new Dialog(this);
+        SystemUtil.setLocale(this);
+        DialogPermissionBinding bindingPer = DialogPermissionBinding.inflate(getLayoutInflater());
+        dialog.setContentView(bindingPer.getRoot());
+
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setGravity(Gravity.CENTER);
+            dialog.getWindow().setLayout(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        }
+
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
+
+        if (type == 1) {
+            bindingPer.tvContent.setText(R.string.content_dialog_per_1);
+        } else if (type == 2) {
+            bindingPer.tvContent.setText(R.string.content_dialog_per_2);
+        } else if (type == 3) {
+            bindingPer.tvContent.setText(R.string.content_dialog_per_3);
+        } else if (type == 4) {
+            bindingPer.tvContent.setText(R.string.content_dialog_per_4);
+        }
+
+        bindingPer.tvStay.setOnClickListener(view ->
+        {
+            isShowDialog = false;
+            dialog.dismiss();
+        });
+
+        bindingPer.tvAgree.setOnClickListener(view -> {
+//            AppOpenManager.getInstance().disableAppResumeWithActivity(PermissionActivity.class);
+            if (type == 3){
+                Intent intent = null;
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+                    intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + getPackageName()));
+                }
+                louncherOverlay.launch(intent);
+                dialog.dismiss();
+                isShowDialog = false;
+
+            }else {
+                Intent intent = new Intent();
+                intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                Uri uri = Uri.fromParts("package", getPackageName(), null);
+                intent.setData(uri);
+                startActivity(intent);
+                dialog.dismiss();
+                isShowDialog = false;
+
+            }
+
+        });
+
+        if (!isShowDialog) {
+            dialog.show();
+            isShowDialog = true;
+        }
+    }
+    @SuppressLint("UseCompatLoadingForDrawables")
+    private final ActivityResultLauncher<Intent> louncherOverlay = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+        if (result.getResultCode() == RESULT_OK) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                if (Settings.canDrawOverlays(PermissionActivity.this)) {
+                } else {
+                }
+            } else {
+            }
+        }
+    });
+    public boolean checkOverlayPermission() {
+        return Build.VERSION.SDK_INT < 23 || Settings.canDrawOverlays(PermissionActivity.this);
+    }
     @SuppressLint("ClickableViewAccessibility")
     private void checkSwStorage() {
         if (checkStoragePermission()) {
+            binding.ivSwMedia.setImageResource(R.drawable.img_sw_on);
         } else {
+            binding.ivSwMedia.setImageResource(R.drawable.img_sw_off);
+        }
+    }
+    @SuppressLint("ClickableViewAccessibility")
+    private void checkSwOverlay() {
+        if (checkOverlayPermission()) {
+            binding.ivSwOverlay.setImageResource(R.drawable.img_sw_on);
+        } else {
+            binding.ivSwOverlay.setImageResource(R.drawable.img_sw_off);
         }
     }
 
     @SuppressLint("ClickableViewAccessibility")
     private void checkSwNotification() {
         if (checkNotificationPermission()) {
+            binding.ivSwNoti.setImageResource(R.drawable.img_sw_on);
+
         } else {
+            binding.ivSwNoti.setImageResource(R.drawable.img_sw_off);
         }
     }
-    private void showDialogGotoSetting(int i) {
+
+    private void checkAllPer(){
+        checkSwOverlay();
+        checkSwNotification();
+        checkSwStorage();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        checkAllPer();
     }
 
     @Override

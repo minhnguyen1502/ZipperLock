@@ -71,6 +71,7 @@ public class WallpaperActivity extends BaseActivity<ActivityListItemBinding> {
 
     @Override
     public void bindView() {
+        binding.ivBack.setOnClickListener(v -> onBack());
 
     }
     private WallpaperAdapter getAdapter(int currentBackground) {
@@ -85,6 +86,6 @@ public class WallpaperActivity extends BaseActivity<ActivityListItemBinding> {
 
     @Override
     public void onBack() {
-
+        finish();
     }
 }

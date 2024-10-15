@@ -7,12 +7,15 @@ public class SPUtils {
     public static final String PREFERENCE = "PREFERENCE";
     public static final String SHARED_PREFS_NAME = "SHARED_PREFS_NAME";
     public static final String STORAGE = "STORAGE";
+    public static final String NOTIFICATION = "NOTIFICATION";
     public static final String BG = "BG";
     public static final String ZIPPER = "ZIPPER";
     public static final String ROW = "ROW";
+    public static final String ROW_RIGHT = "ROW_RIGHT";
+    public static final String ROW_LEFT = "ROW_LEFT";
     public static final String WALLPAPER = "WALLPAPER";
-    public static final String OPEN = "OPEN";
-    public static final String NOTIFICATION = "NOTIFICATION";
+    public static final String SOUND_OPEN = "SOUND_OPEN";
+    public static final String SOUND_ZIPPER = "SOUND_OPEN";
 
 
     public static SharedPreferences getPref(Context context) {

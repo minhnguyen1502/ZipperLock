@@ -67,4 +67,9 @@
     <string name="broken">Broken</string>
     <string name="bell">Bell</string>
 
+    <string name="title_dialog_per">Grant these permissions to use <b>\"Zipper lock"</b></string>
+    <string name="content_dialog_per_1">Note: You can also grant permission in <b>Settings -> Apps -> Zipper lock -> Storage </b></string>
+    <string name="content_dialog_per_2">Note: You can also grant permission in <b>Settings -> Apps -> Zipper lock -> Notification </b></string>
+    <string name="content_dialog_per_3">Note: You can also grant permission in <b>Settings -> Apps -> Zipper lock -> Overlay </b></string>
+    <string name="content_dialog_per_4">Note: You can also grant permission in <b>Settings -> Apps -> Zipper lock -> Photos and videos </b></string>
 </resources>

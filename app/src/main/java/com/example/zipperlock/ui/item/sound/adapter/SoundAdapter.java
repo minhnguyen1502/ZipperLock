@@ -17,6 +17,7 @@ import com.example.zipperlock.ui.item.row.adapter.RowAdapter;
 import com.example.zipperlock.ui.item.row.model.Row;
 import com.example.zipperlock.ui.item.sound.model.Sound;
 import com.example.zipperlock.ui.item.sound.model.SoundType;
+import com.example.zipperlock.util.SPUtils;
 
 import java.util.List;
 
@@ -25,12 +26,15 @@ public class SoundAdapter extends RecyclerView.Adapter<SoundAdapter.ItemViewHold
     private final ClickItem clickItem;
     private final Context context;
     private int selectedPosition;
+    private final PlaySound playSound;
 
-    public SoundAdapter(Context context, List<Sound> backgroundList, int selectedPosition, ClickItem clickItem) {
+    public SoundAdapter(Context context, List<Sound> backgroundList, int selectedPosition,
+                        ClickItem clickItem, PlaySound playSound) {
         this.context = context;
         this.listItem = backgroundList;
-        this.selectedPosition = selectedPosition; // Initialize it
+        this.selectedPosition = selectedPosition;
         this.clickItem = clickItem;
+        this.playSound = playSound;
     }
 
     @NonNull
@@ -48,6 +52,8 @@ public class SoundAdapter extends RecyclerView.Adapter<SoundAdapter.ItemViewHold
         Glide.with(holder.binding.img.getContext()).load(sound.getImg()).into(holder.binding.img);
         holder.binding.bg.setBackgroundResource(sound.getColor_item());
         holder.binding.name.setText(sound.getName());
+        holder.binding.play.setOnClickListener(v -> playSound.playSound(sound.getSound()));
+
         if (selectedPosition == position) {
             holder.binding.choose.setVisibility(View.VISIBLE);
         } else {
@@ -80,6 +86,11 @@ public class SoundAdapter extends RecyclerView.Adapter<SoundAdapter.ItemViewHold
 
     public interface ClickItem {
         void clickItem(int position, Sound sound);
+    }
+
+    public interface PlaySound {
+        void playSound(int soundResId);
+
     }
 }
 
