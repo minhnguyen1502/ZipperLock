@@ -34,6 +34,14 @@
             android:exported="false"
             android:screenOrientation="portrait"/>
         <activity
+            android:name=".ui.setting.AboutActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.policy.PolicyActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"/>
+        <activity
             android:name=".ui.splash.SplashActivity"
             android:exported="true"
             android:screenOrientation="portrait"  >
@@ -65,10 +73,6 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.intro.IntroActivity"
-            android:exported="false"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.policy.PolicyActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
