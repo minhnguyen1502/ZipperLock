@@ -27,6 +27,7 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.zipperlock.R;
 import com.example.zipperlock.base.BaseActivity;
 import com.example.zipperlock.databinding.ActivityPlaySoundBinding;
+import com.example.zipperlock.ui.apply.ApplyActivity;
 import com.example.zipperlock.util.SPUtils;
 
 public class PlaySoundActivity extends BaseActivity<ActivityPlaySoundBinding>{
@@ -34,6 +35,7 @@ public class PlaySoundActivity extends BaseActivity<ActivityPlaySoundBinding>{
     VolumeObserver volumeObserver;
     private boolean isPlay = false;
 private int sound;
+private int type;
     @Override
     public ActivityPlaySoundBinding getBinding() {
         return ActivityPlaySoundBinding.inflate(getLayoutInflater());
@@ -43,6 +45,7 @@ private int sound;
     public void initView() {
         Intent i = getIntent();
         sound = i.getIntExtra("sound",-1);
+        type = i.getIntExtra("type",-1);
         int img = i.getIntExtra("img",-1);
         int color = i.getIntExtra("bg_color",-1);
         int name = i.getIntExtra("name",-1);
@@ -64,6 +67,7 @@ private int sound;
             Toast.makeText(this, "Image not found", Toast.LENGTH_SHORT).show();
 
         }
+
 
         if (name != -1){
             binding.title.setText(name);
@@ -89,8 +93,19 @@ private int sound;
     @Override
     public void bindView() {
         binding.btnSelect.setOnClickListener(v -> {
-            SPUtils.setInt(this, SPUtils.SOUND_OPEN, sound);
-            SPUtils.setInt(this, SPUtils.SOUND_ZIPPER, sound);
+            Intent i = new Intent(this, ApplyActivity.class);
+            if (type!=-1){
+                if (type == 0){
+                    i.putExtra("sound_zipper", sound);
+                    i.putExtra("type", type);
+                }else {
+                    i.putExtra("sound_open", sound);
+                    i.putExtra("type", type);
+                }
+                startActivity(i);
+            }else {
+                Toast.makeText(this, "Type not found", Toast.LENGTH_SHORT).show();
+            }
         });
         binding.btnPlayPause.setOnClickListener(v -> {
             isPlay = !isPlay;

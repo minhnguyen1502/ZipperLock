@@ -36,14 +36,20 @@ public class PersonalizedAdapter extends RecyclerView.Adapter<PersonalizedAdapte
     @Override
     public void onBindViewHolder(@NonNull ImageViewHolder holder, int position) {
         Uri imageUri = imageList.get(position);
-        holder.imageView.setImageURI(imageUri);
+        Glide.with(context)
+                .load(imageUri)
+                .into(holder.imageView);
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(context, ApplyActivity.class);
             intent.putExtra("imageUri", imageUri.toString());
             context.startActivity(intent);
         });
     }
-
+    public void addImages(List<Uri> newImages) {
+        int startPosition = imageList.size();
+        imageList.addAll(newImages);
+        notifyItemRangeInserted(startPosition, newImages.size());
+    }
     @Override
     public int getItemCount() {
         return imageList.size();

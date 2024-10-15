@@ -6,17 +6,22 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.view.Gravity;
+import android.view.Window;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
+
 import com.example.zipperlock.base.BaseActivity;
 import com.example.zipperlock.databinding.ActivityApplyBinding;
+import com.example.zipperlock.databinding.DialogBottomPermissionBinding;
 import com.example.zipperlock.databinding.DialogDiscardBinding;
 import com.example.zipperlock.databinding.DialogPermissionBinding;
 import com.example.zipperlock.ui.item.background.BackgroundActivity;
 import com.example.zipperlock.ui.item.row.RowActivity;
 import com.example.zipperlock.ui.item.sound.SoundActivity;
 import com.example.zipperlock.ui.item.zipper.ZipperActivity;
+import com.example.zipperlock.ui.main.MainActivity;
 import com.example.zipperlock.ui.successfully.SuccessfullyActivity;
 import com.example.zipperlock.util.SPUtils;
 import com.example.zipperlock.util.SystemUtil;
@@ -33,7 +38,9 @@ public class ApplyActivity extends BaseActivity<ActivityApplyBinding> {
    private int currentRow;
    private int currentRowRight ;
    private int currentRowLeft  ;
-   private String imageUriString;
+    private int sound_open;
+    private int sound_zipper;
+    private String imageUriString;
     @Override
     public ActivityApplyBinding getBinding() {
         return ActivityApplyBinding.inflate(getLayoutInflater());
@@ -44,6 +51,8 @@ public class ApplyActivity extends BaseActivity<ActivityApplyBinding> {
         imageUriString = intent.getStringExtra("imageUri");
         background  = intent.getIntExtra("background", SPUtils.getInt(this, SPUtils.BG, -1));
         zipper      = intent.getIntExtra("zipper", -1);
+        sound_open  = intent.getIntExtra("sound_zipper", -1);
+        sound_zipper    = intent.getIntExtra("sound_open", -1);
         row         = intent.getIntExtra("row", -1);
         row_r       = intent.getIntExtra("row_r", -1);
         row_l       = intent.getIntExtra("row_l", -1);
@@ -66,6 +75,14 @@ public class ApplyActivity extends BaseActivity<ActivityApplyBinding> {
             Toast.makeText(this, "Row not found", Toast.LENGTH_SHORT).show();
         }
 
+        if (sound_zipper == -1){
+            Toast.makeText(this, "Sound zipper not found", Toast.LENGTH_SHORT).show();
+
+        }
+        if (sound_open == -1){
+            Toast.makeText(this, "Sound open not found", Toast.LENGTH_SHORT).show();
+
+        }
         currentBackground = SPUtils.getInt(this, SPUtils.BG, -1);
         currentZipper= SPUtils.getInt(this, SPUtils.ZIPPER, -1);
         currentRow= SPUtils.getInt(this, SPUtils.ROW, -1);
@@ -79,10 +96,10 @@ public class ApplyActivity extends BaseActivity<ActivityApplyBinding> {
         binding.btnApply.setOnClickListener(v -> applyAll());
 
         binding.ivBack.setOnClickListener(v -> {
-                finish();
+            onBack();
         });
         binding.ivHome.setOnClickListener(v -> {
-                confirmDiscard();
+                onBack();
         });
         binding.btnBg.setOnClickListener(v -> startActivity(new Intent(this, BackgroundActivity.class)));
         binding.btnRow.setOnClickListener(v -> startActivity(new Intent(this, RowActivity.class)));
@@ -93,22 +110,23 @@ public class ApplyActivity extends BaseActivity<ActivityApplyBinding> {
     private void confirmDiscard() {
         Dialog dialog = new Dialog(this);
         DialogDiscardBinding bindingDiscard = DialogDiscardBinding.inflate(getLayoutInflater());
-
-        if (dialog.getWindow() != null) {
-            dialog.getWindow().setGravity(Gravity.CENTER);
-            dialog.getWindow().setLayout(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
-            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.setContentView(bindingDiscard.getRoot());
+        Window window = dialog.getWindow();
+        if (window != null) {
+            window.setGravity(Gravity.CENTER);
+            window.setLayout(ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.WRAP_CONTENT);
+            window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         }
-
-        dialog.setCancelable(false);
-        dialog.setCanceledOnTouchOutside(false);
+        dialog.setCancelable(true);
+        dialog.setCanceledOnTouchOutside(true);
 
         bindingDiscard.tvCancel.setOnClickListener(v -> dialog.dismiss());
-        bindingDiscard.tvDiscard.setOnClickListener(v -> onBack());
+        bindingDiscard.tvDiscard.setOnClickListener(v -> finish());
 
-        if (!dialog.isShowing()) {
-            dialog.show();
+        if (dialog.isShowing()) {
+            dialog.dismiss();
         }
+        dialog.show();
 
     }
 
@@ -119,11 +137,13 @@ public class ApplyActivity extends BaseActivity<ActivityApplyBinding> {
         SPUtils.setInt(this, SPUtils.ROW,row);
         SPUtils.setInt(this, SPUtils.ROW_RIGHT,row_r);
         SPUtils.setInt(this, SPUtils.ROW_LEFT,row_l);
+        SPUtils.setInt(this, SPUtils.SOUND_ZIPPER,sound_zipper);
+        SPUtils.setInt(this, SPUtils.SOUND_OPEN,sound_open);
         startActivity(new Intent(this, SuccessfullyActivity.class));
     }
 
     @Override
     public void onBack() {
-        finish();
+       confirmDiscard();
     }
 }

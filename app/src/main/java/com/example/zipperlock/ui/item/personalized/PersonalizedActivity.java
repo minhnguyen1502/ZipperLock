@@ -5,7 +5,9 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.zipperlock.base.BaseActivity;
 import com.example.zipperlock.databinding.ActivityListItemBinding;
@@ -13,8 +15,16 @@ import com.example.zipperlock.ui.item.personalized.adapter.PersonalizedAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executors;
 
 public class PersonalizedActivity extends BaseActivity<ActivityListItemBinding> {
+    private static final int PAGE_SIZE = 40;  // Số lượng ảnh tải mỗi lần
+    private int currentPage = 0;  // Trang hiện tại
+    private boolean isLoading = false;  // Trạng thái đang tải
+
+    private PersonalizedAdapter adapter;
+    private final List<Uri> imageList = new ArrayList<>();
+
     @Override
     public ActivityListItemBinding getBinding() {
         return ActivityListItemBinding.inflate(getLayoutInflater());
@@ -22,61 +32,90 @@ public class PersonalizedActivity extends BaseActivity<ActivityListItemBinding> 
 
     @Override
     public void initView() {
-//        binding.recycleView.setLayoutManager(new GridLayoutManager(this, 3)); // Hiển thị ảnh theo dạng lưới (3 cột)
-//
-//        List<String> imagePaths = getAllImages();
-//        PersonalizedAdapter adapter = new PersonalizedAdapter(imagePaths, this);
-//        binding.recycleView.setAdapter(adapter);
+        binding.recycleView.setLayoutManager(new GridLayoutManager(this, 4));
 
-        binding.recycleView.setLayoutManager(new GridLayoutManager(this,4));
-
-// Get all images
-        List<Uri> imageList = getAllImages();
-
-// Set the adapter
-        PersonalizedAdapter adapter = new PersonalizedAdapter(this, imageList);
+        adapter = new PersonalizedAdapter(this, imageList);
         binding.recycleView.setAdapter(adapter);
+
+        // Load trang đầu tiên
+        loadImages();
+
+        // Thêm sự kiện cuộn để load thêm dữ liệu
+        binding.recycleView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                GridLayoutManager layoutManager = (GridLayoutManager) recyclerView.getLayoutManager();
+                if (layoutManager != null && !isLoading &&
+                        layoutManager.findLastVisibleItemPosition() >= adapter.getItemCount() - 1) {
+                    // Khi người dùng cuộn đến cuối danh sách
+                    loadImages();
+                }
+            }
+        });
     }
 
     @Override
     public void bindView() {
         binding.ivBack.setOnClickListener(v -> onBack());
-
     }
-    private List<Uri> getAllImages() {
-        List<Uri> imageList = new ArrayList<>();
 
-        // Define the projection (columns to retrieve)
+    // Phương thức load ảnh với phân trang
+    private void loadImages() {
+        isLoading = true;
+
+        // Chạy trên background thread để tránh block giao diện
+        Executors.newSingleThreadExecutor().execute(() -> {
+            List<Uri> newImages = getImagesForPage(currentPage, PAGE_SIZE);
+            runOnUiThread(() -> {
+                if (!newImages.isEmpty()) {
+                    adapter.addImages(newImages);
+                    currentPage++;  // Tăng trang lên
+                }
+                isLoading = false;
+            });
+        });
+    }
+
+    // Lấy ảnh theo từng trang
+    private List<Uri> getImagesForPage(int page, int pageSize) {
+        List<Uri> images = new ArrayList<>();
         String[] projection = new String[]{
                 MediaStore.Images.Media._ID,
                 MediaStore.Images.Media.DISPLAY_NAME
         };
 
-        // Query the external storage for images
-        Cursor cursor = getContentResolver().query(
-                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,  // URI for external images
-                projection,    // The columns to return
-                null,          // Selection clause (optional)
-                null,          // Selection arguments (optional)
-                MediaStore.Images.Media.DATE_TAKEN + " DESC"  // Sort order
-        );
+        // Tính toán LIMIT và OFFSET cho query
+        String limit = pageSize + " OFFSET " + (page * pageSize);
 
-        if (cursor != null) {
-            int idColumn = cursor.getColumnIndexOrThrow(MediaStore.Images.Media._ID);
+        try (Cursor cursor = getContentResolver().query(
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                projection,
+                null,
+                null,
+                MediaStore.Images.Media.DATE_TAKEN + " DESC LIMIT " + limit
+        )) {
+            if (cursor != null) {
+                int idColumn = cursor.getColumnIndexOrThrow(MediaStore.Images.Media._ID);
 
-            // Loop through the cursor to add images to the list
-            while (cursor.moveToNext()) {
-                long id = cursor.getLong(idColumn);
-                Uri contentUri = ContentUris.withAppendedId(
-                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI, id);
+                while (cursor.moveToNext()) {
+                    long id = cursor.getLong(idColumn);
+                    Uri contentUri = ContentUris.withAppendedId(
+                            MediaStore.Images.Media.EXTERNAL_CONTENT_URI, id);
 
-                imageList.add(contentUri);
+                    // Ghi log kiểm tra URI
+//                    Log.d("ImageLoader", "Loaded image URI: " + contentUri.toString());
+                    images.add(contentUri);
+                }
             }
-            cursor.close();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
-        return imageList;
+        return images;
     }
+
     @Override
     public void onBack() {
         finish();

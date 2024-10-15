@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import com.example.zipperlock.R;
 import com.example.zipperlock.base.BaseActivity;
 import com.example.zipperlock.databinding.ActivityListItemBinding;
+import com.example.zipperlock.databinding.ItemSoundBinding;
 import com.example.zipperlock.ui.apply.ApplyActivity;
 import com.example.zipperlock.ui.item.row.adapter.RowAdapter;
 import com.example.zipperlock.ui.item.row.model.Row;
@@ -22,7 +23,7 @@ import java.util.List;
 public class SoundActivity extends BaseActivity<ActivityListItemBinding> implements SoundAdapter.PlaySound {
     private List<Sound> zippers;
     private List<Sound> opens;
-
+    private int pos;
     @Override
     public ActivityListItemBinding getBinding() {
         return ActivityListItemBinding.inflate(getLayoutInflater());
@@ -52,7 +53,7 @@ public class SoundActivity extends BaseActivity<ActivityListItemBinding> impleme
         opens.add(new Sound(R.drawable.img_cat, R.string.cat, R.drawable.bg_open_sound, R.drawable.bg_play_open_sound, R.raw.cat, R.string.open_sound));
 
         Intent i = getIntent();
-        int pos = i.getIntExtra("position", -1);
+        pos = i.getIntExtra("position", -1);
         if (pos != -1) {
             if (pos == 0) {
                 int currentSound = SPUtils.getInt(this, SPUtils.SOUND_ZIPPER, -1);
@@ -78,16 +79,17 @@ public class SoundActivity extends BaseActivity<ActivityListItemBinding> impleme
 
     }
 
-    private SoundAdapter getAdapter(int currentSound, List<Sound> sounds) {
+    private SoundAdapter getAdapter(int currentBackground, List<Sound> sounds) {
         int selectedPosition = 3;
         for (int i = 0; i < sounds.size(); i++) {
-            if (sounds.get(i).getImg() == currentSound) {
+            if (sounds.get(i).getImg() == currentBackground) {
                 selectedPosition = i;
                 break;
             }
         }
         return new SoundAdapter(this, sounds, selectedPosition, (position, sound) -> {
             Intent i = new Intent(this, PlaySoundActivity.class);
+            i.putExtra("type", pos);
             i.putExtra("sound", sound.getSound());
             i.putExtra("bg_color", sound.getColor_list());
             i.putExtra("img", sound.getImg());
@@ -96,31 +98,73 @@ public class SoundActivity extends BaseActivity<ActivityListItemBinding> impleme
         }, this);
     }
 
+    private boolean wasPlaying = false;
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (mediaPlayer != null) {
+            if (mediaPlayer.isPlaying()) {
+                wasPlaying = true;
+                mediaPlayer.pause();
+            } else {
+                wasPlaying = false;
+            }
+        }
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (mediaPlayer != null && wasPlaying) {
+            mediaPlayer.start();
+        }
+
+    }
+
     @Override
     public void onBack() {
+        if (mediaPlayer != null) {
+            mediaPlayer.release();
+            mediaPlayer = null;
+        }
         finish();
     }
 
-    private MediaPlayer mediaPlayer;
-
     @Override
-    public void playSound(int soundResId) {
-        // Release any previous MediaPlayer instance
+    protected void onDestroy() {
+        super.onDestroy();
         if (mediaPlayer != null) {
             mediaPlayer.release();
+            mediaPlayer = null;
         }
+    }
 
-        // Initialize and start MediaPlayer with the given sound resource
-        mediaPlayer = MediaPlayer.create(this, soundResId);
-        if (mediaPlayer != null) {
-            mediaPlayer.start();
-            mediaPlayer.setOnCompletionListener(mp -> {
-                mp.release();
-                mediaPlayer = null;
-                Toast.makeText(this, "Sound finished", Toast.LENGTH_SHORT).show();
-            });
-        } else {
-            Toast.makeText(this, "Unable to play sound", Toast.LENGTH_SHORT).show();
+    private MediaPlayer mediaPlayer;
+    private boolean isPlay = false;
+    @Override
+    public void playSound(int soundResId, ItemSoundBinding binding) {
+        isPlay = !isPlay;
+        if (isPlay){
+            binding.play.setImageResource(R.drawable.ic_pause_sound_in_list);
+            mediaPlayer = MediaPlayer.create(this, soundResId);
+            if (mediaPlayer != null) {
+                mediaPlayer.start();
+                mediaPlayer.setOnCompletionListener(mp -> {
+                    mp.release();
+                    mediaPlayer = null;
+                    binding.play.setImageResource(R.drawable.ic_play_sound_in_list);
+                });
+            } else {
+                Toast.makeText(this, "Unable to play sound", Toast.LENGTH_SHORT).show();
+            }
+        }else {
+            binding.play.setImageResource(R.drawable.ic_play_sound_in_list);
+            if (mediaPlayer != null && mediaPlayer.isPlaying()) {
+                mediaPlayer.pause();
+                mediaPlayer.seekTo(0);
+            }
         }
     }
 }

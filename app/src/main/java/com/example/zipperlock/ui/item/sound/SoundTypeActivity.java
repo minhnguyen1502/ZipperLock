@@ -45,6 +45,6 @@ public class SoundTypeActivity extends BaseActivity<ActivitySoundTypeBinding> {
 
     @Override
     public void onBack() {
-
+        finish();
     }
 }
