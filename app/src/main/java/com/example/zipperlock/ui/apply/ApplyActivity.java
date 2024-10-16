@@ -27,35 +27,32 @@ import com.example.zipperlock.util.SPUtils;
 import com.example.zipperlock.util.SystemUtil;
 
 public class ApplyActivity extends BaseActivity<ActivityApplyBinding> {
-    private boolean isApply = false;
-   private int background;
-   private int zipper;
-   private int row;
-   private int row_r;
-   private int row_l;
-   private int currentBackground;
-   private int currentZipper;
-   private int currentRow;
-   private int currentRowRight ;
-   private int currentRowLeft  ;
+    private final boolean isApply = false;
+    private int background;
+    private int zipper;
+    private int row;
+    private int row_r;
+    private int row_l;
     private int sound_open;
     private int sound_zipper;
     private String imageUriString;
+
     @Override
     public ActivityApplyBinding getBinding() {
         return ActivityApplyBinding.inflate(getLayoutInflater());
     }
+
     @Override
     public void initView() {
         Intent intent = getIntent();
         imageUriString = intent.getStringExtra("imageUri");
-        background  = intent.getIntExtra("background", SPUtils.getInt(this, SPUtils.BG, -1));
-        zipper      = intent.getIntExtra("zipper", -1);
-        sound_open  = intent.getIntExtra("sound_zipper", -1);
-        sound_zipper    = intent.getIntExtra("sound_open", -1);
-        row         = intent.getIntExtra("row", -1);
-        row_r       = intent.getIntExtra("row_r", -1);
-        row_l       = intent.getIntExtra("row_l", -1);
+        background = intent.getIntExtra("background", SPUtils.getInt(this, SPUtils.BG, -1));
+        zipper = intent.getIntExtra("zipper", SPUtils.getInt(this, SPUtils.ZIPPER, -1));
+        sound_open = intent.getIntExtra("sound_zipper", SPUtils.getInt(this, SPUtils.SOUND_OPEN, -1));
+        sound_zipper = intent.getIntExtra("sound_open", SPUtils.getInt(this, SPUtils.SOUND_ZIPPER, -1));
+        row = intent.getIntExtra("row", SPUtils.getInt(this, SPUtils.ROW, -1));
+        row_r = intent.getIntExtra("row_r", SPUtils.getInt(this, SPUtils.ROW_RIGHT, -1));
+        row_l = intent.getIntExtra("row_l", SPUtils.getInt(this, SPUtils.ROW_LEFT, -1));
         if (imageUriString != null) {
             Uri imageUri = Uri.parse(imageUriString);
             binding.bg.setImageURI(imageUri);
@@ -64,30 +61,25 @@ public class ApplyActivity extends BaseActivity<ActivityApplyBinding> {
         } else {
             Toast.makeText(this, "Background not found", Toast.LENGTH_SHORT).show();
         }
-        if (zipper != -1){
+        if (zipper != -1) {
             binding.zip.setImageResource(zipper);
-        }else {
+        } else {
             Toast.makeText(this, "Zipper not found", Toast.LENGTH_SHORT).show();
         }
-        if (row != -1){
+        if (row != -1) {
             binding.row.setImageResource(row);
-        }else {
+        } else {
             Toast.makeText(this, "Row not found", Toast.LENGTH_SHORT).show();
         }
 
-        if (sound_zipper == -1){
+        if (sound_zipper == -1) {
             Toast.makeText(this, "Sound zipper not found", Toast.LENGTH_SHORT).show();
 
         }
-        if (sound_open == -1){
+        if (sound_open == -1) {
             Toast.makeText(this, "Sound open not found", Toast.LENGTH_SHORT).show();
 
         }
-        currentBackground = SPUtils.getInt(this, SPUtils.BG, -1);
-        currentZipper= SPUtils.getInt(this, SPUtils.ZIPPER, -1);
-        currentRow= SPUtils.getInt(this, SPUtils.ROW, -1);
-        currentRowRight = SPUtils.getInt(this, SPUtils.ROW_RIGHT, -1);
-        currentRowLeft  = SPUtils.getInt(this, SPUtils.ROW_LEFT, -1);
     }
 
     @Override
@@ -96,10 +88,10 @@ public class ApplyActivity extends BaseActivity<ActivityApplyBinding> {
         binding.btnApply.setOnClickListener(v -> applyAll());
 
         binding.ivBack.setOnClickListener(v -> {
-            onBack();
+            confirmDiscard(1);
         });
         binding.ivHome.setOnClickListener(v -> {
-                onBack();
+            confirmDiscard(2);
         });
         binding.btnBg.setOnClickListener(v -> startActivity(new Intent(this, BackgroundActivity.class)));
         binding.btnRow.setOnClickListener(v -> startActivity(new Intent(this, RowActivity.class)));
@@ -107,7 +99,7 @@ public class ApplyActivity extends BaseActivity<ActivityApplyBinding> {
         binding.btnZip.setOnClickListener(v -> startActivity(new Intent(this, ZipperActivity.class)));
     }
 
-    private void confirmDiscard() {
+    private void confirmDiscard(int back) {
         Dialog dialog = new Dialog(this);
         DialogDiscardBinding bindingDiscard = DialogDiscardBinding.inflate(getLayoutInflater());
         dialog.setContentView(bindingDiscard.getRoot());
@@ -121,7 +113,14 @@ public class ApplyActivity extends BaseActivity<ActivityApplyBinding> {
         dialog.setCanceledOnTouchOutside(true);
 
         bindingDiscard.tvCancel.setOnClickListener(v -> dialog.dismiss());
-        bindingDiscard.tvDiscard.setOnClickListener(v -> finish());
+        bindingDiscard.tvDiscard.setOnClickListener(v -> {
+            if (back == 1){
+                finish();
+            } else if (back == 2) {
+                startActivity(new Intent(this, MainActivity.class));
+                finishAffinity();
+            }
+        });
 
         if (dialog.isShowing()) {
             dialog.dismiss();
@@ -131,19 +130,19 @@ public class ApplyActivity extends BaseActivity<ActivityApplyBinding> {
     }
 
     private void applyAll() {
-        SPUtils.setInt(this, SPUtils.BG,background);
-        SPUtils.setString(this, SPUtils.BG,imageUriString);
-        SPUtils.setInt(this, SPUtils.ZIPPER,zipper);
-        SPUtils.setInt(this, SPUtils.ROW,row);
-        SPUtils.setInt(this, SPUtils.ROW_RIGHT,row_r);
-        SPUtils.setInt(this, SPUtils.ROW_LEFT,row_l);
-        SPUtils.setInt(this, SPUtils.SOUND_ZIPPER,sound_zipper);
-        SPUtils.setInt(this, SPUtils.SOUND_OPEN,sound_open);
+        SPUtils.setInt(this, SPUtils.BG, background);
+        SPUtils.setString(this, SPUtils.BG, imageUriString);
+        SPUtils.setInt(this, SPUtils.ZIPPER, zipper);
+        SPUtils.setInt(this, SPUtils.ROW, row);
+        SPUtils.setInt(this, SPUtils.ROW_RIGHT, row_r);
+        SPUtils.setInt(this, SPUtils.ROW_LEFT, row_l);
+        SPUtils.setInt(this, SPUtils.SOUND_ZIPPER, sound_zipper);
+        SPUtils.setInt(this, SPUtils.SOUND_OPEN, sound_open);
         startActivity(new Intent(this, SuccessfullyActivity.class));
     }
 
     @Override
     public void onBack() {
-       confirmDiscard();
+        confirmDiscard(1);
     }
 }

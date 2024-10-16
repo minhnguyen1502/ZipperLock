@@ -18,9 +18,9 @@ import java.util.List;
 import java.util.concurrent.Executors;
 
 public class PersonalizedActivity extends BaseActivity<ActivityListItemBinding> {
-    private static final int PAGE_SIZE = 40;  // Số lượng ảnh tải mỗi lần
-    private int currentPage = 0;  // Trang hiện tại
-    private boolean isLoading = false;  // Trạng thái đang tải
+    private static final int PAGE_SIZE = 40;
+    private int currentPage = 0;
+    private boolean isLoading = false;
 
     private PersonalizedAdapter adapter;
     private final List<Uri> imageList = new ArrayList<>();
@@ -37,10 +37,8 @@ public class PersonalizedActivity extends BaseActivity<ActivityListItemBinding> 
         adapter = new PersonalizedAdapter(this, imageList);
         binding.recycleView.setAdapter(adapter);
 
-        // Load trang đầu tiên
         loadImages();
 
-        // Thêm sự kiện cuộn để load thêm dữ liệu
         binding.recycleView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
@@ -49,7 +47,6 @@ public class PersonalizedActivity extends BaseActivity<ActivityListItemBinding> 
                 GridLayoutManager layoutManager = (GridLayoutManager) recyclerView.getLayoutManager();
                 if (layoutManager != null && !isLoading &&
                         layoutManager.findLastVisibleItemPosition() >= adapter.getItemCount() - 1) {
-                    // Khi người dùng cuộn đến cuối danh sách
                     loadImages();
                 }
             }
@@ -61,24 +58,21 @@ public class PersonalizedActivity extends BaseActivity<ActivityListItemBinding> 
         binding.ivBack.setOnClickListener(v -> onBack());
     }
 
-    // Phương thức load ảnh với phân trang
     private void loadImages() {
         isLoading = true;
 
-        // Chạy trên background thread để tránh block giao diện
         Executors.newSingleThreadExecutor().execute(() -> {
             List<Uri> newImages = getImagesForPage(currentPage, PAGE_SIZE);
             runOnUiThread(() -> {
                 if (!newImages.isEmpty()) {
                     adapter.addImages(newImages);
-                    currentPage++;  // Tăng trang lên
+                    currentPage++;
                 }
                 isLoading = false;
             });
         });
     }
 
-    // Lấy ảnh theo từng trang
     private List<Uri> getImagesForPage(int page, int pageSize) {
         List<Uri> images = new ArrayList<>();
         String[] projection = new String[]{
@@ -86,7 +80,6 @@ public class PersonalizedActivity extends BaseActivity<ActivityListItemBinding> 
                 MediaStore.Images.Media.DISPLAY_NAME
         };
 
-        // Tính toán LIMIT và OFFSET cho query
         String limit = pageSize + " OFFSET " + (page * pageSize);
 
         try (Cursor cursor = getContentResolver().query(
@@ -104,7 +97,6 @@ public class PersonalizedActivity extends BaseActivity<ActivityListItemBinding> 
                     Uri contentUri = ContentUris.withAppendedId(
                             MediaStore.Images.Media.EXTERNAL_CONTENT_URI, id);
 
-                    // Ghi log kiểm tra URI
 //                    Log.d("ImageLoader", "Loaded image URI: " + contentUri.toString());
                     images.add(contentUri);
                 }

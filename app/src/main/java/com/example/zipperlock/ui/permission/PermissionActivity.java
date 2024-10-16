@@ -70,9 +70,9 @@ public class PermissionActivity extends BaseActivity<ActivityPermissionBinding> 
         binding.ivSwMedia.setOnClickListener(view -> {
             if (!checkStoragePermission()) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_MEDIA_IMAGES, Manifest.permission.READ_MEDIA_VIDEO, Manifest.permission.READ_MEDIA_AUDIO}, REQUEST_CODE_STORAGE_PERMISSION);
+                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_MEDIA_IMAGES}, REQUEST_CODE_STORAGE_PERMISSION);
                 } else {
-                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CODE_STORAGE_PERMISSION);
+                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_CODE_STORAGE_PERMISSION);
                 }
             }
         });
@@ -83,7 +83,7 @@ public class PermissionActivity extends BaseActivity<ActivityPermissionBinding> 
         finishAffinity();
     }
     private boolean checkStoragePermission() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED ) {
             return true;
         } else {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -132,7 +132,7 @@ public class PermissionActivity extends BaseActivity<ActivityPermissionBinding> 
                 checkSwStorage();
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                        if (!shouldShowRequestPermissionRationale(Manifest.permission.READ_MEDIA_IMAGES) && !shouldShowRequestPermissionRationale(Manifest.permission.READ_MEDIA_AUDIO) && !shouldShowRequestPermissionRationale(Manifest.permission.READ_MEDIA_VIDEO)) {
+                        if (!shouldShowRequestPermissionRationale(Manifest.permission.READ_MEDIA_IMAGES)) {
                             countStorage++;
 //                            AppOpenManager.getInstance().disableAppResumeWithActivity(PermissionActivity.class);
                             SPUtils.setInt(this, SPUtils.STORAGE, countStorage);
@@ -143,7 +143,7 @@ public class PermissionActivity extends BaseActivity<ActivityPermissionBinding> 
                             }
                         }
                     } else {
-                        if (!shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE) && !shouldShowRequestPermissionRationale(Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                        if (!shouldShowRequestPermissionRationale(Manifest.permission.READ_EXTERNAL_STORAGE)) {
                             countStorage++;
 //                            AppOpenManager.getInstance().disableAppResumeWithActivity(PermissionActivity.class);
                             SPUtils.setInt(this, SPUtils.STORAGE, countStorage);
