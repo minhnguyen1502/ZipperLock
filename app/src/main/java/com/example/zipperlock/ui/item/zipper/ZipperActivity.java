@@ -18,7 +18,7 @@ import java.util.List;
 
 public class ZipperActivity extends BaseActivity<ActivityListItemBinding> {
     private List<Zipper> listItems;
-
+    int currentZip;
     @Override
     public ActivityListItemBinding getBinding() {
         return ActivityListItemBinding.inflate(getLayoutInflater());
@@ -49,8 +49,8 @@ public class ZipperActivity extends BaseActivity<ActivityListItemBinding> {
         listItems.add(new Zipper( R.drawable.img_zipper_list_20));
         listItems.add(new Zipper( R.drawable.img_zipper_list_21));
         listItems.add(new Zipper( R.drawable.img_zipper_list_22));
-        int currentBackground = SPUtils.getInt(this, SPUtils.ZIPPER, -1);
-        ZipperAdapter adapter = getAdapter(currentBackground);
+        currentZip = SPUtils.getInt(this, SPUtils.ZIPPER, -1);
+        ZipperAdapter adapter = getAdapter();
         binding.recycleView.setAdapter(adapter);
         binding.recycleView.setLayoutManager(new GridLayoutManager(this, 2));
 
@@ -61,10 +61,10 @@ public class ZipperActivity extends BaseActivity<ActivityListItemBinding> {
         binding.ivBack.setOnClickListener(v -> onBack());
 
     }
-    private ZipperAdapter getAdapter(int currentBackground) {
-        int selectedPosition = 3;
+    private ZipperAdapter getAdapter() {
+        int selectedPosition = 1;
         for (int i = 0; i < listItems.size(); i++) {
-            if (listItems.get(i).getImg() == currentBackground) {
+            if (listItems.get(i).getImg() == currentZip) {
                 selectedPosition = i;
                 break;
             }
@@ -74,6 +74,14 @@ public class ZipperActivity extends BaseActivity<ActivityListItemBinding> {
             i.putExtra("zipper", zipper.getImg());
             startActivity(i);
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ZipperAdapter adapter = getAdapter();
+        binding.recycleView.setAdapter(adapter);
+        binding.recycleView.setLayoutManager(new GridLayoutManager(this, 2));
     }
 
     @Override

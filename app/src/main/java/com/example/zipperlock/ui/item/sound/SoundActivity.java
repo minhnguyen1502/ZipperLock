@@ -80,7 +80,7 @@ public class SoundActivity extends BaseActivity<ActivityListItemBinding> impleme
     }
 
     private SoundAdapter getAdapter(int currentBackground, List<Sound> sounds) {
-        int selectedPosition = 3;
+        int selectedPosition = 1;
         for (int i = 0; i < sounds.size(); i++) {
             if (sounds.get(i).getImg() == currentBackground) {
                 selectedPosition = i;

@@ -3,6 +3,7 @@ package com.example.zipperlock.ui.item.background;
 import android.content.Intent;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.example.zipperlock.R;
@@ -51,16 +52,28 @@ public class BackgroundActivity extends BaseActivity<ActivityListItemBinding> {
         listItems.add(new Background( R.drawable.img_bg_18));
         listItems.add(new Background( R.drawable.img_bg_19));
         listItems.add(new Background( R.drawable.img_bg_20));
-
-        BackgroundAdapter adapter = new BackgroundAdapter(this, listItems,  (position, backgroundModel) -> {
-            Intent i = new Intent(this, ApplyActivity.class);
-            i.putExtra("background", backgroundModel.getImg());
-            startActivity(i);
-        });
+        BackgroundAdapter adapter = getBackgroundAdapter();
         binding.recycleView.setAdapter(adapter);
         binding.recycleView.setLayoutManager(new GridLayoutManager(this, 2));
 
         }
+
+    @NonNull
+    private BackgroundAdapter getBackgroundAdapter() {
+        int selectedPosition = 1;
+        for (int i = 0; i < listItems.size(); i++) {
+            if (listItems.get(i).getImg() == currentBackground) {
+                selectedPosition = i;
+                break;
+            }
+        }
+        BackgroundAdapter adapter = new BackgroundAdapter(this, listItems, selectedPosition, (position, backgroundModel) -> {
+            Intent i = new Intent(this, ApplyActivity.class);
+            i.putExtra("background", backgroundModel.getImg());
+            startActivity(i);
+        });
+        return adapter;
+    }
 
     @Override
     public void bindView() {
@@ -71,6 +84,7 @@ public class BackgroundActivity extends BaseActivity<ActivityListItemBinding> {
     @Override
     protected void onResume() {
         super.onResume();
+        getBackgroundAdapter();
     }
 
     @Override

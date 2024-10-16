@@ -19,7 +19,7 @@ import java.util.List;
 
 public class RowActivity extends BaseActivity<ActivityListItemBinding> {
     private List<Row> listItems;
-
+    int currentRow;
     @Override
     public ActivityListItemBinding getBinding() {
         return ActivityListItemBinding.inflate(getLayoutInflater());
@@ -44,8 +44,8 @@ public class RowActivity extends BaseActivity<ActivityListItemBinding> {
         listItems.add(new Row( R.drawable.img_row_list_14,R.drawable.img_row_14,R.drawable.img_row_r_14, R.drawable.img_row_l_14));
         listItems.add(new Row( R.drawable.img_row_list_15,R.drawable.img_row_15,R.drawable.img_row_r_15, R.drawable.img_row_l_15));
         listItems.add(new Row( R.drawable.img_row_list_16,R.drawable.img_row_16,R.drawable.img_row_r_16, R.drawable.img_row_l_16));
-        int currentBackground = SPUtils.getInt(this, SPUtils.ROW, -1);
-        RowAdapter adapter = getAdapter(currentBackground);
+        currentRow = SPUtils.getInt(this, SPUtils.ROW, -1);
+        RowAdapter adapter = getAdapter();
         binding.recycleView.setAdapter(adapter);
         binding.recycleView.setLayoutManager(new GridLayoutManager(this, 2));
 
@@ -56,10 +56,10 @@ public class RowActivity extends BaseActivity<ActivityListItemBinding> {
         binding.ivBack.setOnClickListener(v -> onBack());
 
     }
-    private RowAdapter getAdapter(int currentBackground) {
-        int selectedPosition = 3;
+    private RowAdapter getAdapter() {
+        int selectedPosition = 1;
         for (int i = 0; i < listItems.size(); i++) {
-            if (listItems.get(i).getImg() == currentBackground) {
+            if (listItems.get(i).getImg() == currentRow) {
                 selectedPosition = i;
                 break;
             }
@@ -71,6 +71,12 @@ public class RowActivity extends BaseActivity<ActivityListItemBinding> {
             i.putExtra("row_l", row.getImg_left());
             startActivity(i);
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getAdapter();
     }
 
     @Override
