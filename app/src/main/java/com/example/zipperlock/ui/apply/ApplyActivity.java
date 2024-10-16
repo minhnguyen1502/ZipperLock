@@ -131,7 +131,7 @@ public class ApplyActivity extends BaseActivity<ActivityApplyBinding> {
 
     private void applyAll() {
         SPUtils.setInt(this, SPUtils.BG, background);
-        SPUtils.setString(this, SPUtils.BG, imageUriString);
+//        SPUtils.setString(this, SPUtils.BG, imageUriString);
         SPUtils.setInt(this, SPUtils.ZIPPER, zipper);
         SPUtils.setInt(this, SPUtils.ROW, row);
         SPUtils.setInt(this, SPUtils.ROW_RIGHT, row_r);
