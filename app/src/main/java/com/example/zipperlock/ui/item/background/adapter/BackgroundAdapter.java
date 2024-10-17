@@ -43,7 +43,6 @@ public class BackgroundAdapter extends RecyclerView.Adapter<BackgroundAdapter.It
     public void onBindViewHolder(@NonNull ItemViewHolder holder, @SuppressLint("RecyclerView") int position) {
         Background background = listItem.get(position);
         holder.binding.img.setImageResource(background.getImg());
-        selectedPosition = SPUtils.getInt(context, SPUtils.BG, -1);
         if (selectedPosition == position) {
             holder.binding.choose.setVisibility(View.VISIBLE);
         } else {

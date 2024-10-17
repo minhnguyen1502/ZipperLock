@@ -30,7 +30,6 @@ public class BackgroundActivity extends BaseActivity<ActivityListItemBinding> {
     @Override
     public void initView() {
         currentBackground = SPUtils.getInt(this, SPUtils.BG, -1);
-
         listItems = new ArrayList<>();
         listItems.add(new Background( R.drawable.img_bg_01));
         listItems.add(new Background( R.drawable.img_bg_02));
@@ -60,7 +59,7 @@ public class BackgroundActivity extends BaseActivity<ActivityListItemBinding> {
 
     @NonNull
     private BackgroundAdapter getBackgroundAdapter() {
-        int selectedPosition = 1;
+        int selectedPosition = -1;
         for (int i = 0; i < listItems.size(); i++) {
             if (listItems.get(i).getImg() == currentBackground) {
                 selectedPosition = i;

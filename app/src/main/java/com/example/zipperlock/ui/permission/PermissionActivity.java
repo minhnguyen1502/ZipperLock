@@ -47,6 +47,13 @@ public class PermissionActivity extends BaseActivity<ActivityPermissionBinding> 
     public void initView() {
         countStorage = SPUtils.getInt(this, SPUtils.STORAGE, 0);
         countNotification = SPUtils.getInt(this, SPUtils.NOTIFICATION, 0);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            binding.noti.setVisibility(View.VISIBLE);
+            checkAllPer();
+        } else {
+            binding.noti.setVisibility(View.GONE);
+            checkSwStorage();
+        }
     }
 
     @Override

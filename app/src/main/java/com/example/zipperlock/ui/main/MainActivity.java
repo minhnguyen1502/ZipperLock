@@ -59,6 +59,8 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
     private final int REQUEST_CODE_NOTIFICATION_PERMISSION = 127;
     private int countStorage = 0;
     private int countNotification = 0;
+    DialogBottomPermissionBinding bindingPer;
+    Dialog dialogPer;
     @Override
     public ActivityMainBinding getBinding() {
         return ActivityMainBinding.inflate(getLayoutInflater());
@@ -69,9 +71,9 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
         isLock = SPUtils.getBoolean(this,SPUtils.IS_LOCK, false);
         countStorage = SPUtils.getInt(this, SPUtils.STORAGE, 0);
         countNotification = SPUtils.getInt(this, SPUtils.NOTIFICATION, 0);
-//        if (Utils.isFirstOpenApp()){
-//            showDialogBottomPer();
-//        }
+        if (!checkNotificationPermission() || !checkStoragePermission() || !checkOverlayPermission()){
+            showDialogBottomPer();
+        }
         binding.recycleView.setLayoutManager(new GridLayoutManager(this, 2));
 
         listItems = new ArrayList<>();
@@ -116,7 +118,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
                 binding.ivEnable.setImageResource(R.drawable.img_sw_enable_on);
                 SPUtils.setBoolean(this, SPUtils.IS_LOCK, isLock);
                 Lockscreen.getInstance(this).startLockscreenService();
-
             }else {
                 binding.ivEnable.setImageResource(R.drawable.img_sw_enable_off);
                 SPUtils.setBoolean(this, SPUtils.IS_LOCK, isLock);
@@ -126,22 +127,27 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
         });
     }
     private void showDialogBottomPer() {
-        Dialog dialog = new Dialog(this);
-        DialogBottomPermissionBinding bindingPer = DialogBottomPermissionBinding.inflate(getLayoutInflater());
-        dialog.setContentView(bindingPer.getRoot());
-        Window window = dialog.getWindow();
+        dialogPer = new Dialog(this);
+        bindingPer = DialogBottomPermissionBinding.inflate(getLayoutInflater());
+        dialogPer.setContentView(bindingPer.getRoot());
+        Window window = dialogPer.getWindow();
         if (window != null) {
             window.setGravity(Gravity.BOTTOM);
             window.setLayout(ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.WRAP_CONTENT);
             window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         }
-        dialog.setCancelable(true);
-        dialog.setCanceledOnTouchOutside(true);
+        dialogPer.setCancelable(true);
+        dialogPer.setCanceledOnTouchOutside(true);
 
-        checkSwOverlay(bindingPer);
-        checkSwStorage(bindingPer);
-        checkSwNotification(bindingPer);
+        checkSwOverlay();
+        checkSwStorage();
+        checkSwNotification();
 
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.TIRAMISU) {
+            bindingPer.ivSwNoti.setImageResource(R.drawable.ic_sw_dialog_on);
+            checkSwOverlay();
+            checkSwStorage();
+        }
         bindingPer.step1.setOnClickListener(v -> {
             bindingPer.step1.setBackgroundResource(R.drawable.bg_btn_status_2);
             bindingPer.step3.setBackgroundResource(R.drawable.bg_btn_status_1);
@@ -191,17 +197,17 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
             }
         });
         bindingPer.ivClose.setOnClickListener(v -> {
-                dialog.dismiss();
+            dialogPer.dismiss();
         });
 
-        if (dialog.isShowing()) {
-            dialog.dismiss();
+        if (dialogPer.isShowing()) {
+            dialogPer.dismiss();
         }
-        dialog.show();
+        dialogPer.show();
 
     }
     @SuppressLint("ClickableViewAccessibility")
-    private void checkSwStorage(DialogBottomPermissionBinding bindingPer) {
+    private void checkSwStorage() {
         if (checkStoragePermission()) {
             bindingPer.ivSwMedia.setImageResource(R.drawable.img_sw_on);
         } else {
@@ -209,7 +215,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
         }
     }
     @SuppressLint("ClickableViewAccessibility")
-    private void checkSwOverlay(DialogBottomPermissionBinding bindingPer) {
+    private void checkSwOverlay() {
         if (checkOverlayPermission()) {
             bindingPer.ivSwOverlay.setImageResource(R.drawable.img_sw_on);
         } else {
@@ -222,11 +228,11 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
 
         if (requestCode == REQUEST_CODE_NOTIFICATION_PERMISSION) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-//                checkSwNotification();
+                checkSwNotification();
             }
 
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_DENIED) {
-//                checkSwNotification();
+                checkSwNotification();
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     if (!shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
                         countNotification++;
@@ -243,11 +249,11 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
 
         if (requestCode == REQUEST_CODE_STORAGE_PERMISSION) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-//                checkSwStorage();
+                checkSwStorage();
             }
 
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_DENIED) {
-//                checkSwStorage();
+                checkSwStorage();
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                         if (!shouldShowRequestPermissionRationale(Manifest.permission.READ_MEDIA_IMAGES)) {
@@ -277,7 +283,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
         }
     }
     @SuppressLint("ClickableViewAccessibility")
-    private void checkSwNotification(DialogBottomPermissionBinding bindingPer) {
+    private void checkSwNotification() {
         if (checkNotificationPermission()) {
             bindingPer.ivSwNoti.setImageResource(R.drawable.img_sw_on);
 

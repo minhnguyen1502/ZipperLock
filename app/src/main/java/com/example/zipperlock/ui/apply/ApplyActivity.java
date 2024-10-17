@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Window;
 import android.widget.RelativeLayout;
@@ -36,7 +37,7 @@ public class ApplyActivity extends BaseActivity<ActivityApplyBinding> {
     private int sound_open;
     private int sound_zipper;
     private String imageUriString;
-
+    private String TAG = "data";
     @Override
     public ActivityApplyBinding getBinding() {
         return ActivityApplyBinding.inflate(getLayoutInflater());
@@ -53,32 +54,41 @@ public class ApplyActivity extends BaseActivity<ActivityApplyBinding> {
         row = intent.getIntExtra("row", SPUtils.getInt(this, SPUtils.ROW, -1));
         row_r = intent.getIntExtra("row_r", SPUtils.getInt(this, SPUtils.ROW_RIGHT, -1));
         row_l = intent.getIntExtra("row_l", SPUtils.getInt(this, SPUtils.ROW_LEFT, -1));
+
+        if (imageUriString == null) {
+            imageUriString = SPUtils.getString(this, SPUtils.BG_PER, "null");
+        }
+        if (background == -1) {
+            background = SPUtils.getInt(this, SPUtils.BG, -1);
+        }
+
         if (imageUriString != null) {
             Uri imageUri = Uri.parse(imageUriString);
             binding.bg.setImageURI(imageUri);
         } else if (background != -1) {
             binding.bg.setImageResource(background);
         } else {
-            Toast.makeText(this, "Background not found", Toast.LENGTH_SHORT).show();
+            Log.e(TAG,"Background not found");
         }
+
         if (zipper != -1) {
             binding.zip.setImageResource(zipper);
         } else {
-            Toast.makeText(this, "Zipper not found", Toast.LENGTH_SHORT).show();
+            Log.e(TAG,"Zipper not found");
         }
+
         if (row != -1) {
             binding.row.setImageResource(row);
         } else {
-            Toast.makeText(this, "Row not found", Toast.LENGTH_SHORT).show();
+            Log.e(TAG,"Row not found");
         }
 
         if (sound_zipper == -1) {
-            Toast.makeText(this, "Sound zipper not found", Toast.LENGTH_SHORT).show();
-
+            Log.e(TAG,"Sound zipper not found");
         }
-        if (sound_open == -1) {
-            Toast.makeText(this, "Sound open not found", Toast.LENGTH_SHORT).show();
 
+        if (sound_open == -1) {
+            Log.e(TAG,"Sound open not found");
         }
     }
 
@@ -130,8 +140,15 @@ public class ApplyActivity extends BaseActivity<ActivityApplyBinding> {
     }
 
     private void applyAll() {
-        SPUtils.setInt(this, SPUtils.BG, background);
-//        SPUtils.setString(this, SPUtils.BG, imageUriString);
+        if (imageUriString != null){
+            SPUtils.setInt(this, SPUtils.BG, -1);
+            SPUtils.setString(this, SPUtils.BG_PER, imageUriString);
+
+        }else {
+            SPUtils.setInt(this, SPUtils.BG, background);
+            SPUtils.setString(this, SPUtils.BG_PER, null);
+        }
+
         SPUtils.setInt(this, SPUtils.ZIPPER, zipper);
         SPUtils.setInt(this, SPUtils.ROW, row);
         SPUtils.setInt(this, SPUtils.ROW_RIGHT, row_r);
