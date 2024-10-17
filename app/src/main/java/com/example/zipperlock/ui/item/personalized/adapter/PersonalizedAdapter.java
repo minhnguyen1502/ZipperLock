@@ -38,6 +38,8 @@ public class PersonalizedAdapter extends RecyclerView.Adapter<PersonalizedAdapte
         Uri imageUri = imageList.get(position);
         Glide.with(context)
                 .load(imageUri)
+                .placeholder(R.drawable.img_default)  // Ảnh mặc định trong khi chờ tải
+                .error(R.drawable.img_error)
                 .into(holder.imageView);
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(context, ApplyActivity.class);

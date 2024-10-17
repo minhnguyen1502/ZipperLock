@@ -55,11 +55,14 @@ public class ApplyActivity extends BaseActivity<ActivityApplyBinding> {
         row_r = intent.getIntExtra("row_r", SPUtils.getInt(this, SPUtils.ROW_RIGHT, -1));
         row_l = intent.getIntExtra("row_l", SPUtils.getInt(this, SPUtils.ROW_LEFT, -1));
 
-        if (imageUriString == null) {
-            imageUriString = SPUtils.getString(this, SPUtils.BG_PER, "null");
-        }
-        if (background == -1) {
-            background = SPUtils.getInt(this, SPUtils.BG, -1);
+        if (imageUriString == null && background == -1){
+            String bgPer = SPUtils.getString(this, SPUtils.BG_PER, null);
+            int bgInt = SPUtils.getInt(this, SPUtils.BG, -1);
+            if (bgPer != null) {
+                binding.bg.setImageURI(Uri.parse(bgPer));
+            } else if (bgInt != -1) {
+                binding.bg.setImageResource(bgInt);
+            }
         }
 
         if (imageUriString != null) {
