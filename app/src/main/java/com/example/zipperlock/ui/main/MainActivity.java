@@ -309,7 +309,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
     private boolean checkNotificationPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             return ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED;
-        } else return false;
+        } else return true;
     }
 
     private boolean isShowDialog = false;
