@@ -26,7 +26,6 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.zipperlock.R;
 import com.example.zipperlock.base.BaseActivity;
@@ -36,20 +35,16 @@ import com.example.zipperlock.databinding.DialogPermissionBinding;
 import com.example.zipperlock.ui.item.background.BackgroundActivity;
 import com.example.zipperlock.ui.item.personalized.PersonalizedActivity;
 import com.example.zipperlock.ui.item.row.RowActivity;
-import com.example.zipperlock.ui.item.sound.SoundActivity;
 import com.example.zipperlock.ui.item.sound.SoundTypeActivity;
 import com.example.zipperlock.ui.item.wallpaper.WallpaperActivity;
 import com.example.zipperlock.ui.item.zipper.ZipperActivity;
-import com.example.zipperlock.ui.lockscreen.service.LockScreen;
+import com.example.zipperlock.ui.lockscreen.LockScreen;
 import com.example.zipperlock.ui.main.adapter.ItemAdapter;
-import com.example.zipperlock.ui.main.lock.Lockscreen;
 import com.example.zipperlock.ui.main.model.ItemModel;
-import com.example.zipperlock.ui.permission.PermissionActivity;
 import com.example.zipperlock.ui.preview.PreviewActivity;
 import com.example.zipperlock.ui.setting.SettingActivity;
 import com.example.zipperlock.util.SPUtils;
 import com.example.zipperlock.util.SystemUtil;
-import com.example.zipperlock.util.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -79,9 +74,11 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
         countNotification = SPUtils.getInt(this, SPUtils.NOTIFICATION, 0);
         LockScreen.getInstance().init(this,true);
         if(LockScreen.getInstance().isActive()){
+            isLock = true;
             binding.ivEnable.setImageResource(R.drawable.img_sw_enable_on);
         }else{
             binding.ivEnable.setImageResource(R.drawable.img_sw_enable_off);
+            isLock = false;
 
         }
         if (!checkNotificationPermission() || !checkStoragePermission() || !checkOverlayPermission()) {
@@ -103,9 +100,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
         adapter = new ItemAdapter(listItems, position -> {
             switch (position) {
                 case 0:
-                    if (ModelName.equals("Xiaomi") && !f993sp.getBoolean("POP_WINDOWS_PERMISSION", false)) {
-                        XiaomiBackGroundPapWindowsPermission();
-                    } else if (checkOverlayPermission() && checkNotificationPermission() && checkStoragePermission()) {
+                     if (checkOverlayPermission() && checkNotificationPermission() && checkStoragePermission()) {
                         startActivity(new Intent(this, BackgroundActivity.class));
                         break;
                     } else {
@@ -278,7 +273,9 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
 
         });
         bindingPer.ivSwOverlay.setOnClickListener(v -> {
-            if (!checkOverlayPermission()) {
+            if (ModelName.equals("Xiaomi") && !f993sp.getBoolean("POP_WINDOWS_PERMISSION", false)) {
+                XiaomiBackGroundPapWindowsPermission();
+            } else if (!checkOverlayPermission()) {
                 showDialogGotoSetting(3);
             }
         });

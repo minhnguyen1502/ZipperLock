@@ -130,13 +130,13 @@
             android:exported="false"
             android:screenOrientation="portrait" />
         <service
-            android:name=".ui.lockscreen.service.LockscreenService"
+            android:name=".ui.lockscreen.LockscreenService"
             android:exported="true"
             android:foregroundServiceType="mediaPlayback"
             tools:ignore="ForegroundServicePermission" />
 
         <receiver
-            android:name=".ui.lockscreen.service.RestartServiceReceiver"
+            android:name=".ui.lockscreen.RestartServiceReceiver"
             android:enabled="true"
             android:exported="false">
             <intent-filter>

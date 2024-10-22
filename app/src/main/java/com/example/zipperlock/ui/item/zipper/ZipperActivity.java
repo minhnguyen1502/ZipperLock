@@ -79,9 +79,7 @@ public class ZipperActivity extends BaseActivity<ActivityListItemBinding> {
     @Override
     protected void onResume() {
         super.onResume();
-        ZipperAdapter adapter = getAdapter();
-        binding.recycleView.setAdapter(adapter);
-        binding.recycleView.setLayoutManager(new GridLayoutManager(this, 2));
+    getAdapter();
     }
 
     @Override

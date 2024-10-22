@@ -1,4 +1,4 @@
-package com.example.zipperlock.ui.lockscreen.service;
+package com.example.zipperlock.ui.lockscreen;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

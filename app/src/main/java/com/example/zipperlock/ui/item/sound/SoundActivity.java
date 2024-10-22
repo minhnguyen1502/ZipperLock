@@ -60,11 +60,14 @@ public class SoundActivity extends BaseActivity<ActivityListItemBinding> impleme
                 SoundAdapter adapter = getAdapter(currentSound, zippers);
                 binding.recycleView.setAdapter(adapter);
                 binding.recycleView.setLayoutManager(new GridLayoutManager(this, 2));
+                Toast.makeText(this, "sound zipper", Toast.LENGTH_SHORT).show();
             } else {
                 int currentSound = SPUtils.getInt(this, SPUtils.SOUND_OPEN, -1);
                 SoundAdapter adapter = getAdapter(currentSound, opens);
                 binding.recycleView.setAdapter(adapter);
                 binding.recycleView.setLayoutManager(new GridLayoutManager(this, 2));
+                Toast.makeText(this, "sound open", Toast.LENGTH_SHORT).show();
+
             }
         } else {
             Toast.makeText(this, "no data", Toast.LENGTH_SHORT).show();
@@ -80,7 +83,7 @@ public class SoundActivity extends BaseActivity<ActivityListItemBinding> impleme
     }
 
     private SoundAdapter getAdapter(int currentBackground, List<Sound> sounds) {
-        int selectedPosition = 1;
+        int selectedPosition = -1;
         for (int i = 0; i < sounds.size(); i++) {
             if (sounds.get(i).getImg() == currentBackground) {
                 selectedPosition = i;

@@ -1,4 +1,4 @@
-package com.example.zipperlock.ui.lockscreen.service;
+package com.example.zipperlock.ui.lockscreen;
 
 import android.app.ActivityManager;
 import android.content.Context;

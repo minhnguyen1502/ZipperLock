@@ -75,17 +75,17 @@ public class ZipperScreenLockView extends View {
     private static final double ZIPPER_MASK_HEIGHT = 1100.0;
     private static final double BG_WIDTH = 640.0;
     private static final double ROW_HEIGHT = 800.0;
-    private static final double ROW_WIDTH = 100.0;
+    private static final double ROW_WIDTH = 70.0;
     private static final double ZIP_WIDTH = 90.0;
     private static final double BG_HEIGHT = 1136.0;
-    private static final double ZIPPER_WIDTH = 32.0;
-    private static final double ZIPPER_LEFT_WIDTH = 445.0;
+    private static final double ZIPPER_WIDTH = 38.0;
+    private static final double ZIPPER_LEFT_WIDTH = 458.0;
     private static final double ZIPPER_LEFT_HEIGHT = 1100.0;
-    private static final double ZIPPER_LEFT_WIDTH_NO_ZIPPER = 385.0;
+    private static final double ZIPPER_LEFT_WIDTH_NO_ZIPPER = 401.0;
     private static final double LEFT_ZIPPER_WIDTH = 35.0;
     private static final int INIT_HEIGHT_INT = 50;
     private static final double INIT_HEIGHT_DOUBLE = 50.0;
-    private static final double ZIPPER_SCALE = 1.21;
+    private static final double ZIPPER_SCALE = 2.0;
 
     public ZipperScreenLockView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -125,7 +125,7 @@ public class ZipperScreenLockView extends View {
 
     @SuppressLint("UseCompatLoadingForDrawables")
     private void initView(Context context) {
-        mBitmapZipper = ((BitmapDrawable) context.getResources().getDrawable(R.drawable.img_zipper_01)).getBitmap();
+        mBitmapZipper = ((BitmapDrawable) context.getResources().getDrawable(R.drawable.img_zipper_list_1)).getBitmap();
         mBitmapZipperLeft = ((BitmapDrawable) context.getResources().getDrawable(R.drawable.img_row_l_1)).getBitmap();
         mBitmapZipperRight = ((BitmapDrawable) context.getResources().getDrawable(R.drawable.img_row_r_1)).getBitmap();
         mBitmapZipperBg = ((BitmapDrawable) context.getResources().getDrawable(R.drawable.img_bg_01)).getBitmap();

@@ -82,7 +82,7 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginTop="4dp"
-        android:src="@drawable/img_zipper_01"
+        android:src="@drawable/img_zipper_list_1"
         app:layout_constraintEnd_toEndOf="@id/bg"
         app:layout_constraintStart_toStartOf="@id/bg"
         app:layout_constraintTop_toTopOf="@id/bg" />

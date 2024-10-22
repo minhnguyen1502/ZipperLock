@@ -34,7 +34,7 @@ public class PreviewActivity extends BaseActivity<ActivityPreviewBinding> {
     @Override
     public void initView() {
         int zip_sound = SPUtils.getInt(this, SPUtils.SOUND_ZIPPER, -1);
-        int open_sound = SPUtils.getInt(this, SPUtils.SOUND_ZIPPER, -1);
+        int open_sound = SPUtils.getInt(this, SPUtils.SOUND_OPEN, -1);
         int row = SPUtils.getInt(this, SPUtils.ROW, -1);
         int row_r = SPUtils.getInt(this, SPUtils.ROW_RIGHT, -1);
         int row_l = SPUtils.getInt(this, SPUtils.ROW_LEFT, -1);
@@ -93,11 +93,20 @@ public class PreviewActivity extends BaseActivity<ActivityPreviewBinding> {
                     sound_zip.prepareAsync();
                     isSoundPlaying = false;
                 }
-                if (sound_open != null && !sound_open.isPlaying()) {
-                    sound_open.start();
-                    sound_open.setLooping(true);
+
+                if (sound_zip != null && !sound_zip.isPlaying()) {
+                    sound_zip.start();
                     isSoundOpenPlaying = true;
+
+                    sound_zip.setOnCompletionListener(mp -> {
+                        // Khi phát xong, dừng lại và cập nhật trạng thái
+                        isSoundOpenPlaying = false;
+                        // Nếu muốn giải phóng MediaPlayer sau khi phát xong
+                        sound_zip.release();
+                        sound_zip = null;
+                    });
                 }
+
                 finish();
             }
 
@@ -148,10 +157,7 @@ public class PreviewActivity extends BaseActivity<ActivityPreviewBinding> {
             sound_zip.release();
             sound_zip = null;
         }
-        if (sound_open != null) {
-            sound_open.release();
-            sound_open = null;
-        }
+
     }
 
     @Override
@@ -160,10 +166,6 @@ public class PreviewActivity extends BaseActivity<ActivityPreviewBinding> {
         if (sound_zip != null) {
             sound_zip.release();
             sound_zip = null;
-        }
-        if (sound_open != null) {
-            sound_open.release();
-            sound_open = null;
         }
     }
 }

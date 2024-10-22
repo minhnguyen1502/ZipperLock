@@ -49,8 +49,8 @@ public class ApplyActivity extends BaseActivity<ActivityApplyBinding> {
         imageUriString = intent.getStringExtra("imageUri");
         background = intent.getIntExtra("background", SPUtils.getInt(this, SPUtils.BG, -1));
         zipper = intent.getIntExtra("zipper", SPUtils.getInt(this, SPUtils.ZIPPER, -1));
-        sound_open = intent.getIntExtra("sound_zipper", SPUtils.getInt(this, SPUtils.SOUND_OPEN, -1));
-        sound_zipper = intent.getIntExtra("sound_open", SPUtils.getInt(this, SPUtils.SOUND_ZIPPER, -1));
+        sound_open = intent.getIntExtra("sound_open", SPUtils.getInt(this, SPUtils.SOUND_OPEN, -1));
+        sound_zipper = intent.getIntExtra("sound_zipper", SPUtils.getInt(this, SPUtils.SOUND_ZIPPER, -1));
         row = intent.getIntExtra("row", SPUtils.getInt(this, SPUtils.ROW, -1));
         row_r = intent.getIntExtra("row_r", SPUtils.getInt(this, SPUtils.ROW_RIGHT, -1));
         row_l = intent.getIntExtra("row_l", SPUtils.getInt(this, SPUtils.ROW_LEFT, -1));
@@ -88,10 +88,15 @@ public class ApplyActivity extends BaseActivity<ActivityApplyBinding> {
 
         if (sound_zipper == -1) {
             Log.e(TAG,"Sound zipper not found");
+        }else {
+            Toast.makeText(this, "sound zipper", Toast.LENGTH_SHORT).show();
+
         }
 
         if (sound_open == -1) {
             Log.e(TAG,"Sound open not found");
+        }else {
+            Toast.makeText(this, "sound open", Toast.LENGTH_SHORT).show();
         }
     }
 

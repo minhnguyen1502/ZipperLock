@@ -1,4 +1,4 @@
-package com.example.zipperlock.ui.lockscreen.service;
+package com.example.zipperlock.ui.lockscreen;
 
 import android.annotation.SuppressLint;
 import android.app.Notification;

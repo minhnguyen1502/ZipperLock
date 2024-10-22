@@ -97,10 +97,8 @@ private int type;
             if (type!=-1){
                 if (type == 0){
                     i.putExtra("sound_zipper", sound);
-                    i.putExtra("type", type);
                 }else {
                     i.putExtra("sound_open", sound);
-                    i.putExtra("type", type);
                 }
                 startActivity(i);
             }else {
