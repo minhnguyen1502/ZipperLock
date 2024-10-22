@@ -218,6 +218,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
         });
     }
 
+    @SuppressLint("ResourceAsColor")
     private void showDialogBottomPer() {
 
         dialogPer = new Dialog(this);
@@ -244,6 +245,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
 
         bindingPer.step2.setOnClickListener(v -> {
             if (checkNotificationPermission()) {
+                bindingPer.step2.setTextColor(R.color.white);
                 bindingPer.step1.setBackgroundResource(R.drawable.bg_btn_status_3);
                 bindingPer.step3.setBackgroundResource(R.drawable.bg_btn_status_1);
                 bindingPer.step2.setBackgroundResource(R.drawable.bg_btn_status_2);
@@ -253,12 +255,14 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
                 bindingPer.noti.setVisibility(View.GONE);
                 bindingPer.step1.setClickable(false);
             } else {
-                Toast.makeText(this, "asda", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.permission_is_required_to_proceed_to_the_next_step), Toast.LENGTH_SHORT).show();
             }
 
         });
         bindingPer.step3.setOnClickListener(v -> {
             if (checkOverlayPermission()) {
+                bindingPer.step2.setTextColor(R.color.white);
+                bindingPer.step3.setTextColor(R.color.white);
                 bindingPer.step1.setBackgroundResource(R.drawable.bg_btn_status_3);
                 bindingPer.step3.setBackgroundResource(R.drawable.bg_btn_status_2);
                 bindingPer.step2.setBackgroundResource(R.drawable.bg_btn_status_3);
@@ -269,7 +273,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
                 bindingPer.step1.setClickable(false);
                 bindingPer.step2.setClickable(false);
             } else {
-                Toast.makeText(this, "asda", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.permission_is_required_to_proceed_to_the_next_step), Toast.LENGTH_SHORT).show();
             }
 
         });

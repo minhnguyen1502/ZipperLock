@@ -30,7 +30,7 @@ public class IntroActivity extends BaseActivity<ActivityIntroBinding> {
 
         viewPager = binding.viewPager2;
 
-        content = new String[]{"Zipper Lock Screen", "Various Zipper styles","Realistic Zipper opening sound" };
+        content = new String[]{getString(R.string.zipper_lock_screen), getString(R.string.various_zipper_styles),getString(R.string.realistic_zipper_opening_sound) };
         dots = new ImageView[]{binding.ivCircle01, binding.ivCircle02, binding.ivCircle03};
         introAdapter = new IntroAdapter(this);
         viewPager.setAdapter(introAdapter);
