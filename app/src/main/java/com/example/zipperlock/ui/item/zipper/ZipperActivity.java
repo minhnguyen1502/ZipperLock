@@ -62,7 +62,7 @@ public class ZipperActivity extends BaseActivity<ActivityListItemBinding> {
 
     }
     private ZipperAdapter getAdapter() {
-        int selectedPosition = 1;
+        int selectedPosition = 0;
         for (int i = 0; i < listItems.size(); i++) {
             if (listItems.get(i).getImg() == currentZip) {
                 selectedPosition = i;

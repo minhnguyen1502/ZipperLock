@@ -59,7 +59,7 @@ public class BackgroundActivity extends BaseActivity<ActivityListItemBinding> {
 
     @NonNull
     private BackgroundAdapter getBackgroundAdapter() {
-        int selectedPosition = -1;
+        int selectedPosition = 0;
         for (int i = 0; i < listItems.size(); i++) {
             if (listItems.get(i).getImg() == currentBackground) {
                 selectedPosition = i;
