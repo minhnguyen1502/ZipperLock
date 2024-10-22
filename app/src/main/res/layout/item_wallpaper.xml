@@ -11,6 +11,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginHorizontal="8dp"
+        android:scaleType="centerCrop"
         android:layout_marginVertical="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         android:src="@drawable/img_wallpaper_10"

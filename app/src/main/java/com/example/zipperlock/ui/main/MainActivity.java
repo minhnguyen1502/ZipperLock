@@ -2,8 +2,10 @@ package com.example.zipperlock.ui.main;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -38,10 +40,12 @@ import com.example.zipperlock.ui.item.sound.SoundActivity;
 import com.example.zipperlock.ui.item.sound.SoundTypeActivity;
 import com.example.zipperlock.ui.item.wallpaper.WallpaperActivity;
 import com.example.zipperlock.ui.item.zipper.ZipperActivity;
+import com.example.zipperlock.ui.lockscreen.service.LockScreen;
 import com.example.zipperlock.ui.main.adapter.ItemAdapter;
 import com.example.zipperlock.ui.main.lock.Lockscreen;
 import com.example.zipperlock.ui.main.model.ItemModel;
 import com.example.zipperlock.ui.permission.PermissionActivity;
+import com.example.zipperlock.ui.preview.PreviewActivity;
 import com.example.zipperlock.ui.setting.SettingActivity;
 import com.example.zipperlock.util.SPUtils;
 import com.example.zipperlock.util.SystemUtil;
@@ -61,6 +65,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
     private int countNotification = 0;
     DialogBottomPermissionBinding bindingPer;
     Dialog dialogPer;
+    private String ModelName;
 
     @Override
     public ActivityMainBinding getBinding() {
@@ -72,9 +77,19 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
         isLock = SPUtils.getBoolean(this, SPUtils.IS_LOCK, false);
         countStorage = SPUtils.getInt(this, SPUtils.STORAGE, 0);
         countNotification = SPUtils.getInt(this, SPUtils.NOTIFICATION, 0);
+        LockScreen.getInstance().init(this,true);
+        if(LockScreen.getInstance().isActive()){
+            binding.ivEnable.setImageResource(R.drawable.img_sw_enable_on);
+        }else{
+            binding.ivEnable.setImageResource(R.drawable.img_sw_enable_off);
+
+        }
         if (!checkNotificationPermission() || !checkStoragePermission() || !checkOverlayPermission()) {
             showDialogBottomPer();
         }
+        ModelName = Build.MANUFACTURER;
+        f993sp = this.getSharedPreferences("USER_PREF", 0);
+
         binding.recycleView.setLayoutManager(new GridLayoutManager(this, 2));
 
         listItems = new ArrayList<>();
@@ -88,7 +103,9 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
         adapter = new ItemAdapter(listItems, position -> {
             switch (position) {
                 case 0:
-                    if (checkOverlayPermission() && checkNotificationPermission() && checkStoragePermission()) {
+                    if (ModelName.equals("Xiaomi") && !f993sp.getBoolean("POP_WINDOWS_PERMISSION", false)) {
+                        XiaomiBackGroundPapWindowsPermission();
+                    } else if (checkOverlayPermission() && checkNotificationPermission() && checkStoragePermission()) {
                         startActivity(new Intent(this, BackgroundActivity.class));
                         break;
                     } else {
@@ -140,7 +157,31 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
 
         binding.recycleView.setAdapter(adapter);
     }
+    private SharedPreferences f993sp;
 
+    public void XiaomiBackGroundPapWindowsPermission() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Permission");
+        builder.setMessage("please allow permission display pop up windows while running in the background");
+        builder.setCancelable(true);
+        builder.setPositiveButton("Setting", (dialogInterface, i) -> {
+            dialogInterface.cancel();
+            SharedPreferences.Editor edit = f993sp.edit();
+            edit.putBoolean("POP_WINDOWS_PERMISSION", true);
+            edit.apply();
+            //An resume
+            Intent intent = new Intent("miui.intent.action.APP_PERM_EDITOR");
+            intent.setClassName("com.miui.securitycenter", "com.miui.permcenter.permissions.PermissionsEditorActivity");
+            intent.putExtra("extra_pkgname", this.getPackageName());
+            this.startActivity(intent);
+        });
+
+        builder.setNegativeButton(R.string.cancel, (dialogInterface, i) -> {
+            dialogInterface.cancel();
+        });
+
+        builder.create().show();
+    }
     @Override
     public void bindView() {
         binding.ivSetting.setOnClickListener(v -> {
@@ -153,7 +194,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
         });
         binding.btnPreview.setOnClickListener(v -> {
             if (checkOverlayPermission() && checkNotificationPermission() && checkStoragePermission()) {
-
+                startActivity(new Intent(this, PreviewActivity.class));
             } else {
                 showDialogBottomPer();
             }
@@ -163,13 +204,12 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
 
                 isLock = !isLock;
                 if (isLock) {
+                    LockScreen.getInstance().active();
                     binding.ivEnable.setImageResource(R.drawable.img_sw_enable_on);
-                    SPUtils.setBoolean(this, SPUtils.IS_LOCK, isLock);
-                    Lockscreen.getInstance(this).startLockscreenService();
+
                 } else {
+                    LockScreen.getInstance().deactivate();
                     binding.ivEnable.setImageResource(R.drawable.img_sw_enable_off);
-                    SPUtils.setBoolean(this, SPUtils.IS_LOCK, isLock);
-                    Lockscreen.getInstance(this).stopLockscreenService();
 
                 }
             } else {
