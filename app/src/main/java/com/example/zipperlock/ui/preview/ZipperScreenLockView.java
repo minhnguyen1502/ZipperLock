@@ -67,7 +67,7 @@ public class ZipperScreenLockView extends View {
         }
     };
 
-    private IZipperListener listener;
+    private ZipperScreenLockView.IZipperListener listener;
 
     private static final double ZIPPER_BG_WIDTH = 480.0;
     private static final double ZIPPER_BG_HEIGHT = 845.0;
@@ -75,17 +75,17 @@ public class ZipperScreenLockView extends View {
     private static final double ZIPPER_MASK_HEIGHT = 1100.0;
     private static final double BG_WIDTH = 640.0;
     private static final double ROW_HEIGHT = 800.0;
-    private static final double ROW_WIDTH = 70.0;
+    private static final double ROW_WIDTH = 190.0;
     private static final double ZIP_WIDTH = 90.0;
     private static final double BG_HEIGHT = 1136.0;
-    private static final double ZIPPER_WIDTH = 38.0;
-    private static final double ZIPPER_LEFT_WIDTH = 458.0;
+    private static final double ZIPPER_WIDTH = 32.0;
+    private static final double ZIPPER_LEFT_WIDTH = 405.0;
     private static final double ZIPPER_LEFT_HEIGHT = 1100.0;
-    private static final double ZIPPER_LEFT_WIDTH_NO_ZIPPER = 401.0;
+    private static final double ZIPPER_LEFT_WIDTH_NO_ZIPPER = 385.0;
     private static final double LEFT_ZIPPER_WIDTH = 35.0;
     private static final int INIT_HEIGHT_INT = 50;
     private static final double INIT_HEIGHT_DOUBLE = 50.0;
-    private static final double ZIPPER_SCALE = 2.0;
+    private static final double ZIPPER_SCALE = 0.5;
 
     public ZipperScreenLockView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -110,7 +110,7 @@ public class ZipperScreenLockView extends View {
         mPaintMask.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_IN));
     }
 
-    public void setCompleteListener(IZipperListener listener) {
+    public void setCompleteListener(ZipperScreenLockView.IZipperListener listener) {
         this.listener = listener;
     }
 
@@ -130,14 +130,14 @@ public class ZipperScreenLockView extends View {
         mBitmapZipperRight = ((BitmapDrawable) context.getResources().getDrawable(R.drawable.img_row_r_1)).getBitmap();
         mBitmapZipperBg = ((BitmapDrawable) context.getResources().getDrawable(R.drawable.img_bg_01)).getBitmap();
         mBitmapZipperMask = ((BitmapDrawable) context.getResources().getDrawable(R.drawable.mash)).getBitmap();
-        mBitmapRow = ((BitmapDrawable) context.getResources().getDrawable(R.drawable.img_row_1)).getBitmap();
-        mBitmapBg = ((BitmapDrawable) context.getResources().getDrawable(R.drawable.img_background)).getBitmap();
+        mBitmapRow = ((BitmapDrawable) context.getResources().getDrawable(R.drawable.img_row_01)).getBitmap();
+        mBitmapBg = ((BitmapDrawable) context.getResources().getDrawable(R.drawable.img_default)).getBitmap();
     }
 
     /*-------------------------Set data for zipper---------------------------------------------------------------*/
     @SuppressLint("UseCompatLoadingForDrawables")
     public void setBitmapZipper(int resource) {
-//        mBitmapZipper = ((BitmapDrawable) mContext.getResources().getDrawable(resource)).getBitmap();
+        mBitmapZipper = ((BitmapDrawable) mContext.getResources().getDrawable(resource)).getBitmap();
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inScaled = false;
         mBitmapZipper = BitmapFactory.decodeResource(mContext.getResources(), resource, options);

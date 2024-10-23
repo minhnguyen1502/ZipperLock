@@ -47,7 +47,7 @@ public class ZipperAdapter extends RecyclerView.Adapter<ZipperAdapter.ItemViewHo
         } else {
             holder.binding.choose.setVisibility(View.INVISIBLE);
         }
-        holder.binding.img.setOnClickListener(v -> {
+        holder.itemView.setOnClickListener(v -> {
             selectedPosition = position;
             notifyDataSetChanged();
             clickItem.clickItem(position, zipper);

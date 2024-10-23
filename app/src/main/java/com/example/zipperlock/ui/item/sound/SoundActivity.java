@@ -57,17 +57,10 @@ public class SoundActivity extends BaseActivity<ActivityListItemBinding> impleme
         if (pos != -1) {
             if (pos == 0) {
                 int currentSound = SPUtils.getInt(this, SPUtils.SOUND_ZIPPER, -1);
-                SoundAdapter adapter = getAdapter(currentSound, zippers);
-                binding.recycleView.setAdapter(adapter);
-                binding.recycleView.setLayoutManager(new GridLayoutManager(this, 2));
-                Toast.makeText(this, "sound zipper", Toast.LENGTH_SHORT).show();
+                setupRecyclerView(currentSound, zippers);
             } else {
                 int currentSound = SPUtils.getInt(this, SPUtils.SOUND_OPEN, -1);
-                SoundAdapter adapter = getAdapter(currentSound, opens);
-                binding.recycleView.setAdapter(adapter);
-                binding.recycleView.setLayoutManager(new GridLayoutManager(this, 2));
-                Toast.makeText(this, "sound open", Toast.LENGTH_SHORT).show();
-
+                setupRecyclerView(currentSound, opens);
             }
         } else {
             Toast.makeText(this, "no data", Toast.LENGTH_SHORT).show();
@@ -81,11 +74,15 @@ public class SoundActivity extends BaseActivity<ActivityListItemBinding> impleme
         binding.ivBack.setOnClickListener(v -> onBack());
 
     }
-
+    private void setupRecyclerView(int currentSound, List<Sound> soundList) {
+        SoundAdapter adapter = getAdapter(currentSound, soundList);
+        binding.recycleView.setAdapter(adapter);
+        binding.recycleView.setLayoutManager(new GridLayoutManager(this, 2));
+    }
     private SoundAdapter getAdapter(int currentBackground, List<Sound> sounds) {
         int selectedPosition = -1;
         for (int i = 0; i < sounds.size(); i++) {
-            if (sounds.get(i).getImg() == currentBackground) {
+            if (sounds.get(i).getSound() == currentBackground) {
                 selectedPosition = i;
                 break;
             }

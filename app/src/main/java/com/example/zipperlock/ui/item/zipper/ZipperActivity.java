@@ -19,6 +19,7 @@ import java.util.List;
 public class ZipperActivity extends BaseActivity<ActivityListItemBinding> {
     private List<Zipper> listItems;
     int currentZip;
+
     @Override
     public ActivityListItemBinding getBinding() {
         return ActivityListItemBinding.inflate(getLayoutInflater());
@@ -27,28 +28,28 @@ public class ZipperActivity extends BaseActivity<ActivityListItemBinding> {
     @Override
     public void initView() {
         listItems = new ArrayList<>();
-        listItems.add(new Zipper( R.drawable.img_zipper_list_1));
-        listItems.add(new Zipper( R.drawable.img_zipper_list_2));
-        listItems.add(new Zipper( R.drawable.img_zipper_list_3));
-        listItems.add(new Zipper( R.drawable.img_zipper_list_4));
-        listItems.add(new Zipper( R.drawable.img_zipper_list_5));
-        listItems.add(new Zipper( R.drawable.img_zipper_list_6));
-        listItems.add(new Zipper( R.drawable.img_zipper_list_7));
-        listItems.add(new Zipper( R.drawable.img_zipper_list_8));
-        listItems.add(new Zipper( R.drawable.img_zipper_list_9));
-        listItems.add(new Zipper( R.drawable.img_zipper_list_10));
-        listItems.add(new Zipper( R.drawable.img_zipper_list_11));
-        listItems.add(new Zipper( R.drawable.img_zipper_list_12));
-        listItems.add(new Zipper( R.drawable.img_zipper_list_13));
-        listItems.add(new Zipper( R.drawable.img_zipper_list_14));
-        listItems.add(new Zipper( R.drawable.img_zipper_list_15));
-        listItems.add(new Zipper( R.drawable.img_zipper_list_16));
-        listItems.add(new Zipper( R.drawable.img_zipper_list_17));
-        listItems.add(new Zipper( R.drawable.img_zipper_list_18));
-        listItems.add(new Zipper( R.drawable.img_zipper_list_19));
-        listItems.add(new Zipper( R.drawable.img_zipper_list_20));
-        listItems.add(new Zipper( R.drawable.img_zipper_list_21));
-        listItems.add(new Zipper( R.drawable.img_zipper_list_22));
+        listItems.add(new Zipper(R.drawable.img_zipper_list_1));
+        listItems.add(new Zipper(R.drawable.img_zipper_list_2));
+        listItems.add(new Zipper(R.drawable.img_zipper_list_3));
+        listItems.add(new Zipper(R.drawable.img_zipper_list_4));
+        listItems.add(new Zipper(R.drawable.img_zipper_list_5));
+        listItems.add(new Zipper(R.drawable.img_zipper_list_6));
+        listItems.add(new Zipper(R.drawable.img_zipper_list_7));
+        listItems.add(new Zipper(R.drawable.img_zipper_list_8));
+        listItems.add(new Zipper(R.drawable.img_zipper_list_9));
+        listItems.add(new Zipper(R.drawable.img_zipper_list_10));
+        listItems.add(new Zipper(R.drawable.img_zipper_list_11));
+        listItems.add(new Zipper(R.drawable.img_zipper_list_12));
+        listItems.add(new Zipper(R.drawable.img_zipper_list_13));
+        listItems.add(new Zipper(R.drawable.img_zipper_list_14));
+        listItems.add(new Zipper(R.drawable.img_zipper_list_15));
+        listItems.add(new Zipper(R.drawable.img_zipper_list_16));
+        listItems.add(new Zipper(R.drawable.img_zipper_list_17));
+        listItems.add(new Zipper(R.drawable.img_zipper_list_18));
+        listItems.add(new Zipper(R.drawable.img_zipper_list_19));
+        listItems.add(new Zipper(R.drawable.img_zipper_list_20));
+        listItems.add(new Zipper(R.drawable.img_zipper_list_21));
+        listItems.add(new Zipper(R.drawable.img_zipper_list_22));
         currentZip = SPUtils.getInt(this, SPUtils.ZIPPER, -1);
         ZipperAdapter adapter = getAdapter();
         binding.recycleView.setAdapter(adapter);
@@ -61,6 +62,7 @@ public class ZipperActivity extends BaseActivity<ActivityListItemBinding> {
         binding.ivBack.setOnClickListener(v -> onBack());
 
     }
+
     private ZipperAdapter getAdapter() {
         int selectedPosition = 0;
         for (int i = 0; i < listItems.size(); i++) {
@@ -69,7 +71,7 @@ public class ZipperActivity extends BaseActivity<ActivityListItemBinding> {
                 break;
             }
         }
-        return new ZipperAdapter(this, listItems,selectedPosition,  (position, zipper) -> {
+        return new ZipperAdapter(this, listItems, selectedPosition, (position, zipper) -> {
             Intent i = new Intent(this, ApplyActivity.class);
             i.putExtra("zipper", zipper.getImg());
             startActivity(i);
@@ -79,8 +81,11 @@ public class ZipperActivity extends BaseActivity<ActivityListItemBinding> {
     @Override
     protected void onResume() {
         super.onResume();
-    getAdapter();
+        ZipperAdapter adapter = getAdapter();
+        binding.recycleView.setAdapter(adapter);
+        binding.recycleView.setLayoutManager(new GridLayoutManager(this, 2));
     }
+
 
     @Override
     public void onBack() {

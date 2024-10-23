@@ -47,7 +47,7 @@ public class RowAdapter extends RecyclerView.Adapter<RowAdapter.ItemViewHolder> 
         } else {
             holder.binding.choose.setVisibility(View.INVISIBLE);
         }
-        holder.binding.img.setOnClickListener(v -> {
+        holder.itemView.setOnClickListener(v -> {
             selectedPosition = position;
             notifyDataSetChanged();
             clickItem.clickItem(position, row);

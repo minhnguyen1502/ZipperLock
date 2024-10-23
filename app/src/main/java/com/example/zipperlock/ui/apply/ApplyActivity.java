@@ -23,21 +23,22 @@ import com.example.zipperlock.ui.item.row.RowActivity;
 import com.example.zipperlock.ui.item.sound.SoundActivity;
 import com.example.zipperlock.ui.item.zipper.ZipperActivity;
 import com.example.zipperlock.ui.main.MainActivity;
+import com.example.zipperlock.ui.preview.PreviewActivity;
 import com.example.zipperlock.ui.successfully.SuccessfullyActivity;
 import com.example.zipperlock.util.SPUtils;
 import com.example.zipperlock.util.SystemUtil;
 
 public class ApplyActivity extends BaseActivity<ActivityApplyBinding> {
-    private final boolean isApply = false;
     private int background;
     private int zipper;
     private int row;
     private int row_r;
     private int row_l;
+    private int type;
     private int sound_open;
     private int sound_zipper;
     private String imageUriString;
-    private String TAG = "data";
+    private String TAG = "minh";
     @Override
     public ActivityApplyBinding getBinding() {
         return ActivityApplyBinding.inflate(getLayoutInflater());
@@ -54,6 +55,7 @@ public class ApplyActivity extends BaseActivity<ActivityApplyBinding> {
         row = intent.getIntExtra("row", SPUtils.getInt(this, SPUtils.ROW, -1));
         row_r = intent.getIntExtra("row_r", SPUtils.getInt(this, SPUtils.ROW_RIGHT, -1));
         row_l = intent.getIntExtra("row_l", SPUtils.getInt(this, SPUtils.ROW_LEFT, -1));
+        type = intent.getIntExtra("type", -1);
 
         if (imageUriString == null && background == -1){
             String bgPer = SPUtils.getString(this, SPUtils.BG_PER, null);
@@ -86,17 +88,15 @@ public class ApplyActivity extends BaseActivity<ActivityApplyBinding> {
             Log.e(TAG,"Row not found");
         }
 
+        if (type == -1) {
+            Log.e(TAG,"Sound not found");
+        }
         if (sound_zipper == -1) {
             Log.e(TAG,"Sound zipper not found");
-        }else {
-            Toast.makeText(this, "sound zipper", Toast.LENGTH_SHORT).show();
-
         }
 
         if (sound_open == -1) {
             Log.e(TAG,"Sound open not found");
-        }else {
-            Toast.makeText(this, "sound open", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -110,6 +110,18 @@ public class ApplyActivity extends BaseActivity<ActivityApplyBinding> {
         });
         binding.ivHome.setOnClickListener(v -> {
             confirmDiscard(2);
+        });
+        binding.ivPreview.setOnClickListener(v -> {
+            Intent i = new Intent(this, PreviewActivity.class);
+            i.putExtra("sound_zipper", sound_zipper);
+            i.putExtra("sound_open", sound_open);
+            i.putExtra("zip", zipper);
+            i.putExtra("row", row);
+            i.putExtra("row_left", row_l);
+            i.putExtra("row_right", row_r);
+            i.putExtra("background", background);
+            i.putExtra("img_uri", imageUriString);
+            startActivity(i);
         });
         binding.btnBg.setOnClickListener(v -> startActivity(new Intent(this, BackgroundActivity.class)));
         binding.btnRow.setOnClickListener(v -> startActivity(new Intent(this, RowActivity.class)));
@@ -161,8 +173,13 @@ public class ApplyActivity extends BaseActivity<ActivityApplyBinding> {
         SPUtils.setInt(this, SPUtils.ROW, row);
         SPUtils.setInt(this, SPUtils.ROW_RIGHT, row_r);
         SPUtils.setInt(this, SPUtils.ROW_LEFT, row_l);
-        SPUtils.setInt(this, SPUtils.SOUND_ZIPPER, sound_zipper);
-        SPUtils.setInt(this, SPUtils.SOUND_OPEN, sound_open);
+        if (type == 0){
+            SPUtils.setInt(this, SPUtils.SOUND_ZIPPER, sound_zipper);
+            Toast.makeText(this, "save sound zip", Toast.LENGTH_SHORT).show();
+        }else {
+            SPUtils.setInt(this, SPUtils.SOUND_OPEN, sound_open);
+            Toast.makeText(this, "save sound open", Toast.LENGTH_SHORT).show();
+        }
         startActivity(new Intent(this, SuccessfullyActivity.class));
     }
 

@@ -16,6 +16,7 @@ import android.util.Log;
 import com.example.zipperlock.MyApplication;
 import com.example.zipperlock.R;
 import com.example.zipperlock.ui.main.MainActivity;
+import com.example.zipperlock.ui.preview.LockScreenActivity;
 import com.example.zipperlock.ui.preview.PreviewActivity;
 
 public class LockscreenService extends Service {
@@ -97,7 +98,7 @@ public class LockscreenService extends Service {
     }
 
     private void startLockscreenActivity() {
-        Intent startLockscreenActIntent = new Intent(mContext, PreviewActivity.class);
+        Intent startLockscreenActIntent = new Intent(mContext, LockScreenActivity.class);
         startLockscreenActIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(startLockscreenActIntent);
     }

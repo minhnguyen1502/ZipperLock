@@ -4,6 +4,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -61,6 +62,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
     DialogBottomPermissionBinding bindingPer;
     Dialog dialogPer;
     private String ModelName;
+    private boolean isShowDialogBottom = false;
 
     @Override
     public ActivityMainBinding getBinding() {
@@ -69,20 +71,22 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
 
     @Override
     public void initView() {
-        isLock = SPUtils.getBoolean(this, SPUtils.IS_LOCK, false);
         countStorage = SPUtils.getInt(this, SPUtils.STORAGE, 0);
         countNotification = SPUtils.getInt(this, SPUtils.NOTIFICATION, 0);
-        LockScreen.getInstance().init(this,true);
-        if(LockScreen.getInstance().isActive()){
+        LockScreen.getInstance().init(this, true);
+        if (LockScreen.getInstance().isActive()) {
             isLock = true;
             binding.ivEnable.setImageResource(R.drawable.img_sw_enable_on);
-        }else{
+        } else {
             binding.ivEnable.setImageResource(R.drawable.img_sw_enable_off);
             isLock = false;
 
         }
         if (!checkNotificationPermission() || !checkStoragePermission() || !checkOverlayPermission()) {
-            showDialogBottomPer();
+            if (!isShowDialogBottom) {
+                showDialogBottomPer();
+
+            }
         }
         ModelName = Build.MANUFACTURER;
         f993sp = this.getSharedPreferences("USER_PREF", 0);
@@ -100,11 +104,14 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
         adapter = new ItemAdapter(listItems, position -> {
             switch (position) {
                 case 0:
-                     if (checkOverlayPermission() && checkNotificationPermission() && checkStoragePermission()) {
+                    if (checkOverlayPermission() && checkNotificationPermission() && checkStoragePermission()) {
                         startActivity(new Intent(this, BackgroundActivity.class));
                         break;
                     } else {
-                        showDialogBottomPer();
+                        if (!isShowDialogBottom) {
+                            showDialogBottomPer();
+
+                        }
                     }
 
                 case 1:
@@ -113,7 +120,10 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
                         startActivity(new Intent(this, ZipperActivity.class));
                         break;
                     } else {
-                        showDialogBottomPer();
+                        if (!isShowDialogBottom) {
+                            showDialogBottomPer();
+
+                        }
                     }
                 case 2:
                     if (checkOverlayPermission() && checkNotificationPermission() && checkStoragePermission()) {
@@ -121,7 +131,10 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
                         startActivity(new Intent(this, RowActivity.class));
                         break;
                     } else {
-                        showDialogBottomPer();
+                        if (!isShowDialogBottom) {
+                            showDialogBottomPer();
+
+                        }
                     }
                 case 3:
                     if (checkOverlayPermission() && checkNotificationPermission() && checkStoragePermission()) {
@@ -129,7 +142,10 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
                         startActivity(new Intent(this, SoundTypeActivity.class));
                         break;
                     } else {
-                        showDialogBottomPer();
+                        if (!isShowDialogBottom) {
+                            showDialogBottomPer();
+
+                        }
                     }
                 case 4:
                     if (checkOverlayPermission() && checkNotificationPermission() && checkStoragePermission()) {
@@ -137,7 +153,10 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
                         startActivity(new Intent(this, PersonalizedActivity.class));
                         break;
                     } else {
-                        showDialogBottomPer();
+                        if (!isShowDialogBottom) {
+                            showDialogBottomPer();
+
+                        }
                     }
                 case 5:
                     if (checkOverlayPermission() && checkNotificationPermission() && checkStoragePermission()) {
@@ -145,13 +164,17 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
                         startActivity(new Intent(this, WallpaperActivity.class));
                         break;
                     } else {
-                        showDialogBottomPer();
+                        if (!isShowDialogBottom) {
+                            showDialogBottomPer();
+
+                        }
                     }
             }
         }, this);
 
         binding.recycleView.setAdapter(adapter);
     }
+
     private SharedPreferences f993sp;
 
     public void XiaomiBackGroundPapWindowsPermission() {
@@ -177,6 +200,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
 
         builder.create().show();
     }
+
     @Override
     public void bindView() {
         binding.ivSetting.setOnClickListener(v -> {
@@ -184,14 +208,20 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
 
                 startActivity(new Intent(this, SettingActivity.class));
             } else {
-                showDialogBottomPer();
+                if (!isShowDialogBottom) {
+                    showDialogBottomPer();
+
+                }
             }
         });
         binding.btnPreview.setOnClickListener(v -> {
             if (checkOverlayPermission() && checkNotificationPermission() && checkStoragePermission()) {
                 startActivity(new Intent(this, PreviewActivity.class));
             } else {
-                showDialogBottomPer();
+                if (!isShowDialogBottom) {
+                    showDialogBottomPer();
+
+                }
             }
         });
         binding.ivEnable.setOnClickListener(v -> {
@@ -208,7 +238,10 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
 
                 }
             } else {
-                showDialogBottomPer();
+                if (!isShowDialogBottom) {
+                    showDialogBottomPer();
+
+                }
             }
         });
     }
@@ -296,13 +329,21 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
             }
         });
         bindingPer.ivClose.setOnClickListener(v -> {
+            isShowDialogBottom = false;
             dialogPer.dismiss();
         });
+        dialogPer.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                isShowDialogBottom = false;
 
-        if (dialogPer.isShowing()) {
-            dialogPer.dismiss();
+            }
+        });
+
+        if (!isShowDialogBottom) {
+            dialogPer.show();
+            isShowDialogBottom = true;
         }
-        dialogPer.show();
 
     }
 
@@ -501,15 +542,18 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
         }
     });
 
+
     @Override
     protected void onResume() {
         super.onResume();
         checkSwNotification();
         checkSwStorage();
         checkSwOverlay();
-        if (dialogPer != null ) {
+        if (dialogPer != null) {
             if (checkStoragePermission() && checkNotificationPermission() && checkOverlayPermission()) {
                 dialogPer.dismiss();
+                isShowDialogBottom = false;
+
             }
         }
 

@@ -32,6 +32,7 @@
         android:icon="@drawable/img_logo"
         android:label="@string/app_name"
         android:largeHeap="true"
+        android:requestLegacyExternalStorage="true"
         android:roundIcon="@drawable/img_logo"
         android:supportsRtl="true"
         android:theme="@style/Base.Theme.BaseAppJava2"
@@ -57,13 +58,9 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.splash.SplashActivity"
-            android:exported="true"
+            android:exported="false"
             android:screenOrientation="portrait" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".ui.language.LanguageStartActivity"
@@ -84,7 +81,13 @@
         <activity
             android:name=".ui.main.MainActivity"
             android:exported="true"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".ui.intro.IntroActivity"
             android:exported="false"
@@ -135,6 +138,11 @@
             android:foregroundServiceType="mediaPlayback"
             tools:ignore="ForegroundServicePermission" />
 
+        <activity
+            android:name=".ui.preview.LockScreenActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/TranslucentTheme"/>
         <receiver
             android:name=".ui.lockscreen.RestartServiceReceiver"
             android:enabled="true"

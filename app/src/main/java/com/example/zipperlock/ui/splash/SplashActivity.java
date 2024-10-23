@@ -21,14 +21,6 @@ public class SplashActivity extends BaseActivity<ActivitySplashBinding> {
     public void initView() {
         SharePrefUtils.increaseCountOpenApp(this);
 
-        if (!Utils.isFirstOpenApp()){
-            SPUtils.setInt(this, SPUtils.BG, R.drawable.img_bg_01);
-            SPUtils.setInt(this, SPUtils.ZIPPER, R.drawable.img_zipper_list_1);
-            SPUtils.setInt(this, SPUtils.ROW, R.drawable.img_row_1);
-            SPUtils.setInt(this, SPUtils.ROW_RIGHT, R.drawable.img_row_r_1);
-            SPUtils.setInt(this, SPUtils.ROW_LEFT, R.drawable.img_row_l_1);
-        }
-
         new Handler().postDelayed(() -> {
             startNextActivity(LanguageStartActivity.class, null);
             finishAffinity();

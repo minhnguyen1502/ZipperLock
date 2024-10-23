@@ -50,7 +50,7 @@ public class SettingActivity extends BaseActivity<ActivitySettingBinding> {
 
     @Override
     public void onBack() {
-
+        finish();
     }
 
     private String getLanguageNameByCode(String code) {
