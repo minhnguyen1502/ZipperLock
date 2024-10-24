@@ -82,5 +82,29 @@
     <string name="permission_is_required_to_proceed_to_the_next_step">La permission est requise pour passer à l\'étape suivante</string>
     <string name="various_zipper_styles">Divers styles de fermeture éclair</string>
     <string name="realistic_zipper_opening_sound">Son réaliste d\'ouverture de fermeture éclair</string>
+    <string name="please_allow_permission_display_pop_up_windows_while_running_in_the_background_and_show_on_lock_screen">Veuillez autoriser la permission « Afficher les fenêtres pop-up lors de l\'exécution en arrière-plan » et « Afficher sur l\'écran de verrouillage »</string>
+    <string name="setting">Paramètre</string>
+    <string name="image">Image</string>
+    <string name="loading_failed">Échec du chargement</string>
+    <string name="sound_not_found">Son introuvable</string>
+    <string name="color_not_found">Couleur introuvable</string>
+    <string name="image_not_found">Image introuvable</string>
+    <string name="name_not_found">Nom introuvable</string>
+    <string name="type_not_found">Type introuvable</string>
+    <string name="failed_to_set_wallpaper">Échec de la définition du fond d\'écran</string>
+    <string name="lock_screen_wallpaper_not_supported_on_your_device">Le fond d\'écran de l\'écran de verrouillage n\'est pas pris en charge sur votre appareil</string>
+    <string name="failed_to_set_lock_screen_wallpaper">Échec de la définition du fond d\'écran de l\'écran de verrouillage</string>
+    <string name="failed_to_set_home_screen_wallpaper">Échec de la définition du fond d\'écran de l\'écran d\'accueil</string>
+    <string name="wallpaper_not_found">Fond d\'écran introuvable</string>
+    <string name="please_choose_your_language">Veuillez choisir votre langue</string>
+    <string name="discard_changes">Annuler les modifications ?</string>
+    <string name="you_have_unsaved_changes_are_you_sure_you_want_to_discard_all">Vous avez des modifications non enregistrées. Êtes-vous sûr de vouloir tout annuler ?</string>
+    <string name="discard">Annuler</string>
+    <string name="quit_app">Quitter l\'application ?</string>
+    <string name="loading">Chargement...</string>
+    <string name="stay">Rester</string>
+    <string name="home_screen">Écran d\'accueil</string>
+    <string name="lock_screen">Écran de verrouillage</string>
+    <string name="home_screen_and_lock_screen">Écran d\'accueil et écran de verrouillage</string>
 
 </resources>

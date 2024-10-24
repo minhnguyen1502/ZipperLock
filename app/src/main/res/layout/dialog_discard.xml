@@ -23,10 +23,11 @@
             android:layout_gravity="center"
             android:layout_marginBottom="@dimen/_12sdp"
             android:ellipsize="end"
+            android:fontFamily="@font/suez_one_regular"
             android:gravity="center"
             android:includeFontPadding="false"
             android:maxLines="1"
-            android:text="Discard Changes?"
+            android:text="@string/discard_changes"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -35,16 +36,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
+            android:fontFamily="@font/roboto_regular_400"
             android:includeFontPadding="false"
-            android:text="You have unsaved changes. Are you sure you want to discard all?"
+            android:gravity="center_horizontal"
+            android:text="@string/you_have_unsaved_changes_are_you_sure_you_want_to_discard_all"
             android:textColor="@color/black"
-            android:textSize="@dimen/_12ssp" />
+            android:textSize="14sp" />
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:layout_marginTop="24dp"
             android:weightSum="2">
 
             <TextView
@@ -53,15 +57,16 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/_6sdp"
                 android:layout_weight="1"
+                android:background="@drawable/bg_btn_cancel"
                 android:ellipsize="end"
+                android:fontFamily="@font/roboto_bold_700"
                 android:gravity="center"
                 android:includeFontPadding="false"
                 android:maxLines="1"
-                android:paddingHorizontal="@dimen/_12sdp"
-                android:paddingVertical="@dimen/_9sdp"
-                android:text="Cancel"
+                android:paddingVertical="11dp"
+                android:text="@string/cancel"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_11ssp" />
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/tv_discard"
@@ -69,15 +74,16 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_6sdp"
                 android:layout_weight="1"
+                android:background="@drawable/bg_btn_discard"
                 android:ellipsize="end"
+                android:fontFamily="@font/roboto_bold_700"
                 android:gravity="center"
                 android:includeFontPadding="false"
                 android:maxLines="1"
-                android:paddingHorizontal="@dimen/_12sdp"
-                android:paddingVertical="@dimen/_9sdp"
-                android:text="Discard"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_11ssp" />
+                android:paddingVertical="11dp"
+                android:text="@string/discard"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
         </LinearLayout>
     </LinearLayout>
 

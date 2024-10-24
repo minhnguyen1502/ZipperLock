@@ -53,18 +53,18 @@ private int type;
             mediaPlayer = MediaPlayer.create(this, sound);
             mediaPlayer.setOnCompletionListener(mp -> binding.btnPlayPause.setImageResource(R.drawable.ic_play_play_sound));
         } else {
-            Toast.makeText(this, "Sound not found", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.sound_not_found), Toast.LENGTH_SHORT).show();
         }
         if (color != -1){
             binding.view.setBackgroundResource(color);
         } else {
-            Toast.makeText(this, "Color not found", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.color_not_found), Toast.LENGTH_SHORT).show();
         }
 
         if (img != -1){
             binding.img.setImageResource(img);
         }else {
-            Toast.makeText(this, "Image not found", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.image_not_found), Toast.LENGTH_SHORT).show();
 
         }
 
@@ -72,7 +72,7 @@ private int type;
         if (name != -1){
             binding.title.setText(name);
         }else {
-            Toast.makeText(this, "Name not found", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.name_not_found), Toast.LENGTH_SHORT).show();
 
         }
         audioManager = (AudioManager) getSystemService(AUDIO_SERVICE);
@@ -105,7 +105,7 @@ private int type;
                 }
                 startActivity(i);
             }else {
-                Toast.makeText(this, "Type not found", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.type_not_found), Toast.LENGTH_SHORT).show();
             }
         });
         binding.btnPlayPause.setOnClickListener(v -> {

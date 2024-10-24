@@ -6,6 +6,7 @@ import com.example.zipperlock.R;
 import com.example.zipperlock.base.BaseActivity;
 import com.example.zipperlock.databinding.ActivityAboutBinding;
 import com.example.zipperlock.ui.policy.PolicyActivity;
+import com.makeramen.roundedimageview.BuildConfig;
 
 public class AboutActivity extends BaseActivity<ActivityAboutBinding> {
     @Override
@@ -15,7 +16,7 @@ public class AboutActivity extends BaseActivity<ActivityAboutBinding> {
 
     @Override
     public void initView() {
-//        binding.txt.setText(getString(R.string.version) + " " + BuildConfig.VERSION_NAME);
+        binding.txt.setText(getString(R.string.version) + " " + BuildConfig.VERSION_NAME);
 
         binding.ivBack.setOnClickListener(v -> onBack());
 

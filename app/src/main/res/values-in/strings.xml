@@ -82,5 +82,29 @@
     <string name="permission_is_required_to_proceed_to_the_next_step">Izin diperlukan untuk melanjutkan ke langkah berikutnya</string>
     <string name="various_zipper_styles">Berbagai gaya Zipper</string>
     <string name="realistic_zipper_opening_sound">Suara membuka Zipper yang realistis</string>
+    <string name="please_allow_permission_display_pop_up_windows_while_running_in_the_background_and_show_on_lock_screen">Harap izinkan izin \'Tampilkan jendela pop-up saat berjalan di latar belakang\' dan \'Tampilkan di layar kunci\'</string>
+    <string name="setting">Pengaturan</string>
+    <string name="image">Gambar</string>
+    <string name="loading_failed">Gagal memuat</string>
+    <string name="sound_not_found">Suara tidak ditemukan</string>
+    <string name="color_not_found">Warna tidak ditemukan</string>
+    <string name="image_not_found">Gambar tidak ditemukan</string>
+    <string name="name_not_found">Nama tidak ditemukan</string>
+    <string name="type_not_found">Jenis tidak ditemukan</string>
+    <string name="failed_to_set_wallpaper">Gagal mengatur wallpaper</string>
+    <string name="lock_screen_wallpaper_not_supported_on_your_device">Wallpaper layar kunci tidak didukung di perangkat Anda</string>
+    <string name="failed_to_set_lock_screen_wallpaper">Gagal mengatur wallpaper layar kunci</string>
+    <string name="failed_to_set_home_screen_wallpaper">Gagal mengatur wallpaper layar utama</string>
+    <string name="wallpaper_not_found">Wallpaper tidak ditemukan</string>
+    <string name="please_choose_your_language">Silakan pilih bahasa Anda</string>
+    <string name="discard_changes">Buang perubahan?</string>
+    <string name="you_have_unsaved_changes_are_you_sure_you_want_to_discard_all">Anda memiliki perubahan yang belum disimpan. Apakah Anda yakin ingin membuang semuanya?</string>
+    <string name="discard">Buang</string>
+    <string name="quit_app">Keluar dari aplikasi?</string>
+    <string name="loading">Memuat...</string>
+    <string name="stay">Tetap</string>
+    <string name="home_screen">Layar utama</string>
+    <string name="lock_screen">Layar kunci</string>
+    <string name="home_screen_and_lock_screen">Layar utama dan layar kunci</string>
 
 </resources>

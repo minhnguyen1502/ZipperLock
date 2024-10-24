@@ -1,6 +1,7 @@
 package com.example.zipperlock.ui.item.wallpaper;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.app.WallpaperManager;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -14,8 +15,10 @@ import android.widget.Toast;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import com.example.zipperlock.R;
 import com.example.zipperlock.base.BaseActivity;
 import com.example.zipperlock.databinding.ActivitySetWallpaperBinding;
+import com.example.zipperlock.databinding.DialogLoadingBinding;
 import com.example.zipperlock.databinding.DialogSetWallpaperBinding;
 import com.example.zipperlock.ui.successfully.SuccessfullyActivity;
 
@@ -37,7 +40,7 @@ public class SetWallpaperActivity extends BaseActivity<ActivitySetWallpaperBindi
             binding.ivWallpaper1.setImageResource(wallpaper);
             binding.ivWallpaper2.setImageResource(wallpaper);
         }else {
-            Toast.makeText(this, "not found", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.wallpaper_not_found), Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -72,8 +75,7 @@ public class SetWallpaperActivity extends BaseActivity<ActivitySetWallpaperBindi
 
         });
         bindingDialog.both.setOnClickListener(v -> {
-            setWallpaperLockScreen(wallpaper);
-            setWallpaperHome(wallpaper);
+            setWallpaperBoth(wallpaper);
             dialog.dismiss();
 
         });
@@ -85,35 +87,103 @@ public class SetWallpaperActivity extends BaseActivity<ActivitySetWallpaperBindi
 
 
     }
-
-    private void setWallpaperHome(int wallpaperResId) {
-        try {
-            WallpaperManager wallpaperManager = WallpaperManager.getInstance(this);
-            Bitmap bitmap = ((BitmapDrawable) getResources().getDrawable(wallpaperResId)).getBitmap();
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                wallpaperManager.setBitmap(bitmap, null, true, WallpaperManager.FLAG_SYSTEM);
-                startActivity(new Intent(this, SuccessfullyActivity.class));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            Toast.makeText(this, "Failed to set home screen wallpaper", Toast.LENGTH_SHORT).show();
+    Dialog dialogLoading;
+    private void loading() {
+        dialogLoading = new Dialog(this);
+        DialogLoadingBinding bindingDialog = DialogLoadingBinding.inflate(getLayoutInflater());
+        dialogLoading.setContentView(bindingDialog.getRoot());
+        Window window = dialogLoading.getWindow();
+        if (window != null) {
+            window.setGravity(Gravity.CENTER);
+            window.setLayout(ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.WRAP_CONTENT);
+            window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         }
+        dialogLoading.setCancelable(false);
+        dialogLoading.setCanceledOnTouchOutside(false);
+
+        if (dialogLoading.isShowing()) {
+            dialogLoading.dismiss();
+        }
+        dialogLoading.show();
+
+
+    }
+    private void setWallpaperHome(int wallpaperResId) {
+        loading();
+
+        new Thread(() -> {
+            try {
+                WallpaperManager wallpaperManager = WallpaperManager.getInstance(this);
+                Bitmap bitmap = ((BitmapDrawable) getResources().getDrawable(wallpaperResId)).getBitmap();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    wallpaperManager.setBitmap(bitmap, null, true, WallpaperManager.FLAG_SYSTEM);
+
+                    runOnUiThread(() -> {
+                        dialogLoading.dismiss();
+                        startActivity(new Intent(this, SuccessfullyActivity.class));
+                    });
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                runOnUiThread(() -> {
+                    dialogLoading.dismiss();
+                    Toast.makeText(this, getString(R.string.failed_to_set_home_screen_wallpaper), Toast.LENGTH_SHORT).show();
+                });
+            }
+        }).start();
     }
 
     private void setWallpaperLockScreen(int wallpaperResId) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            loading();
+
+            new Thread(() -> {
+                try {
+                    WallpaperManager wallpaperManager = WallpaperManager.getInstance(this);
+                    InputStream inputStream = getResources().openRawResource(wallpaperResId);
+                    wallpaperManager.setStream(inputStream, null, true, WallpaperManager.FLAG_LOCK);
+
+                    runOnUiThread(() -> {
+                        dialogLoading.dismiss();
+                        startActivity(new Intent(this, SuccessfullyActivity.class));
+                    });
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    runOnUiThread(() -> {
+                        dialogLoading.dismiss();
+                        Toast.makeText(this, getString(R.string.failed_to_set_lock_screen_wallpaper), Toast.LENGTH_SHORT).show();
+                    });
+                }
+            }).start();
+        } else {
+            Toast.makeText(this, getString(R.string.lock_screen_wallpaper_not_supported_on_your_device), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void setWallpaperBoth(int wallpaperResId) {
+        loading();
+
+        new Thread(() -> {
             try {
                 WallpaperManager wallpaperManager = WallpaperManager.getInstance(this);
-                InputStream inputStream = getResources().openRawResource(wallpaperResId);
-                wallpaperManager.setStream(inputStream, null, true, WallpaperManager.FLAG_LOCK);
-                startActivity(new Intent(this, SuccessfullyActivity.class));
-            } catch (IOException e) {
+                Bitmap bitmap = ((BitmapDrawable) getResources().getDrawable(wallpaperResId)).getBitmap();
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    wallpaperManager.setBitmap(bitmap, null, true, WallpaperManager.FLAG_SYSTEM);
+                    wallpaperManager.setBitmap(bitmap, null, true, WallpaperManager.FLAG_LOCK);
+                    runOnUiThread(() -> {
+                        dialogLoading.dismiss();
+                        startActivity(new Intent(this, SuccessfullyActivity.class));
+                    });
+                }
+            } catch (Exception e) {
                 e.printStackTrace();
-                Toast.makeText(this, "Failed to set lock screen wallpaper", Toast.LENGTH_SHORT).show();
+                runOnUiThread(() -> {
+                    dialogLoading.dismiss();
+                    Toast.makeText(this, getString(R.string.failed_to_set_wallpaper), Toast.LENGTH_SHORT).show();
+                });
             }
-        } else {
-            Toast.makeText(this, "Lock screen wallpaper not supported on your device", Toast.LENGTH_SHORT).show();
-        }
+        }).start();
     }
 
     @Override

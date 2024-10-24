@@ -181,10 +181,6 @@ public class PreviewActivity extends BaseActivity<ActivityPreviewBinding> {
             sound_zip.pause();
             isSoundPlaying = true;
         }
-        if (sound_open != null && sound_open.isPlaying()) {
-            sound_open.pause();
-            isSoundOpenPlaying = true;
-        }
     }
 
     @Override
@@ -192,9 +188,6 @@ public class PreviewActivity extends BaseActivity<ActivityPreviewBinding> {
         super.onResume();
         if (sound_zip != null && isSoundPlaying) {
             sound_zip.start();
-        }
-        if (sound_open != null && isSoundOpenPlaying) {
-            sound_open.start();
         }
     }
 

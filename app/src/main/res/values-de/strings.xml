@@ -82,5 +82,29 @@
     <string name="permission_is_required_to_proceed_to_the_next_step">Berechtigung ist erforderlich, um mit dem nächsten Schritt fortzufahren</string>
     <string name="various_zipper_styles">Verschiedene Reißverschlussstile</string>
     <string name="realistic_zipper_opening_sound">Realistisches Reißverschluss-Öffnungsgeräusch</string>
+    <string name="please_allow_permission_display_pop_up_windows_while_running_in_the_background_and_show_on_lock_screen">Bitte erlauben Sie die Berechtigung „Pop-up-Fenster im Hintergrund anzeigen“ und „Auf dem Sperrbildschirm anzeigen“</string>
+    <string name="setting">Einstellung</string>
+    <string name="image">Bild</string>
+    <string name="loading_failed">Laden fehlgeschlagen</string>
+    <string name="sound_not_found">Ton nicht gefunden</string>
+    <string name="color_not_found">Farbe nicht gefunden</string>
+    <string name="image_not_found">Bild nicht gefunden</string>
+    <string name="name_not_found">Name nicht gefunden</string>
+    <string name="type_not_found">Typ nicht gefunden</string>
+    <string name="failed_to_set_wallpaper">Festlegen des Hintergrundbildes fehlgeschlagen</string>
+    <string name="lock_screen_wallpaper_not_supported_on_your_device">Sperrbildschirm-Hintergrund wird auf Ihrem Gerät nicht unterstützt</string>
+    <string name="failed_to_set_lock_screen_wallpaper">Festlegen des Sperrbildschirm-Hintergrundes fehlgeschlagen</string>
+    <string name="failed_to_set_home_screen_wallpaper">Festlegen des Startbildschirm-Hintergrundes fehlgeschlagen</string>
+    <string name="wallpaper_not_found">Hintergrundbild nicht gefunden</string>
+    <string name="please_choose_your_language">Bitte wählen Sie Ihre Sprache</string>
+    <string name="discard_changes">Änderungen verwerfen?</string>
+    <string name="you_have_unsaved_changes_are_you_sure_you_want_to_discard_all">Sie haben ungespeicherte Änderungen. Möchten Sie wirklich alles verwerfen?</string>
+    <string name="discard">Verwerfen</string>
+    <string name="quit_app">App beenden?</string>
+    <string name="loading">Lädt...</string>
+    <string name="stay">Bleiben</string>
+    <string name="home_screen">Startbildschirm</string>
+    <string name="lock_screen">Sperrbildschirm</string>
+    <string name="home_screen_and_lock_screen">Startbildschirm und Sperrbildschirm</string>
 
 </resources>

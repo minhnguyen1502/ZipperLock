@@ -29,6 +29,7 @@ public class LockScreenActivity extends BaseActivity<ActivityPreviewBinding> {
 
     @Override
     public void initView() {
+        startLockTask();
         audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
 
         int zip_sound = SPUtils.getInt(this, SPUtils.SOUND_ZIPPER, -1);
@@ -155,6 +156,7 @@ public class LockScreenActivity extends BaseActivity<ActivityPreviewBinding> {
             sound_zip.release();
             sound_zip = null;
         }
+        stopLockTask();
     }
 
     private boolean isDeviceInNormalMode() {

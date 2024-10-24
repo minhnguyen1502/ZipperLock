@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.zipperlock.R;
 import com.example.zipperlock.base.BaseActivity;
 import com.example.zipperlock.databinding.ActivityListItemBinding;
 import com.example.zipperlock.ui.item.personalized.adapter.PersonalizedAdapter;
@@ -33,6 +34,7 @@ public class PersonalizedActivity extends BaseActivity<ActivityListItemBinding> 
 
     @Override
     public void initView() {
+        binding.title.setText(R.string.image);
         binding.recycleView.setLayoutManager(new GridLayoutManager(this, 4));
 
         adapter = new PersonalizedAdapter(this, imageList);
@@ -160,7 +162,7 @@ public class PersonalizedActivity extends BaseActivity<ActivityListItemBinding> 
                 }
             }
         } catch (Exception e) {
-            Toast.makeText(this, "Loading failed", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.loading_failed), Toast.LENGTH_SHORT).show();
         }
 
         return imageUris;

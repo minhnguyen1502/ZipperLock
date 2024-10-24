@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.zipperlock.databinding.ItemBackgroundBinding;
 import com.example.zipperlock.databinding.ItemWallpaperBinding;
 import com.example.zipperlock.ui.item.background.model.Background;
@@ -38,9 +39,10 @@ public class WallpaperAdapter extends RecyclerView.Adapter< WallpaperAdapter.Ite
     @Override
     public void onBindViewHolder(@NonNull  ItemViewHolder holder, @SuppressLint("RecyclerView") int position) {
         Wallpaper wallpaper = listItem.get(position);
-        holder.binding.img.setImageResource(wallpaper.getImg());
-
-        holder.binding.img.setOnClickListener(v -> {
+        Glide.with(context)
+                .load(wallpaper.getImg())
+                .into(holder.binding.img);
+        holder.itemView.setOnClickListener(v -> {
             clickItem.clickItem(position, wallpaper);
         });
     }

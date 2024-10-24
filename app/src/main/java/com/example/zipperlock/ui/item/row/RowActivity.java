@@ -27,8 +27,9 @@ public class RowActivity extends BaseActivity<ActivityListItemBinding> {
 
     @Override
     public void initView() {
+        binding.title.setText(R.string.row_style);
         listItems = new ArrayList<>();
-        listItems.add(new Row(R.drawable.img_row_list_1, R.drawable.img_row_1, R.drawable.img_row_r_1, R.drawable.img_row_l_1));
+        listItems.add(new Row(R.drawable.img_row_list_1, R.drawable.img_row_01, R.drawable.img_row_r_1, R.drawable.img_row_l_1));
         listItems.add(new Row(R.drawable.img_row_list_2, R.drawable.img_row_02, R.drawable.img_row_r_2, R.drawable.img_row_l_2));
         listItems.add(new Row(R.drawable.img_row_list_3, R.drawable.img_row_03, R.drawable.img_row_r_3, R.drawable.img_row_l_3));
         listItems.add(new Row(R.drawable.img_row_list_4, R.drawable.img_row_04, R.drawable.img_row_r_4, R.drawable.img_row_l_4));

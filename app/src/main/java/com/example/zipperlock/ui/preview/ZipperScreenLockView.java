@@ -352,7 +352,7 @@ public class ZipperScreenLockView extends View {
                     isTouch = true;
                     moveY = yTouch;
                     lastY = yTouch;
-                    if (listener != null) listener.zipperMoving();
+//                    if (listener != null) listener.zipperMoving();
                     startMovementCheck();
                 }
                 if (isTouch) {

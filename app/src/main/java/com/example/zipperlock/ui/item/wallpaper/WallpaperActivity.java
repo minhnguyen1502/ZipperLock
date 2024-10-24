@@ -26,6 +26,7 @@ public class WallpaperActivity extends BaseActivity<ActivityListItemBinding> {
 
     @Override
     public void initView() {
+        binding.title.setText(R.string.wallpaper);
         listItems = new ArrayList<>();
         listItems.add(new Wallpaper( R.drawable.img_wallpaper_01));
         listItems.add(new Wallpaper( R.drawable.img_wallpaper_02));

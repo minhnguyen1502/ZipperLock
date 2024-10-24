@@ -26,15 +26,13 @@ public class SoundAdapter extends RecyclerView.Adapter<SoundAdapter.ItemViewHold
     private final ClickItem clickItem;
     private final Context context;
     private int selectedPosition;
-    private final PlaySound playSound;
 
     public SoundAdapter(Context context, List<Sound> backgroundList, int selectedPosition,
-                        ClickItem clickItem, PlaySound playSound) {
+                        ClickItem clickItem ) {
         this.context = context;
         this.listItem = backgroundList;
         this.selectedPosition = selectedPosition;
         this.clickItem = clickItem;
-        this.playSound = playSound;
     }
 
     @NonNull
@@ -52,9 +50,6 @@ public class SoundAdapter extends RecyclerView.Adapter<SoundAdapter.ItemViewHold
         Glide.with(holder.binding.img.getContext()).load(sound.getImg()).into(holder.binding.img);
         holder.binding.bg.setBackgroundResource(sound.getColor_item());
         holder.binding.name.setText(sound.getName());
-        holder.binding.play.setOnClickListener(v -> {
-            playSound.playSound(sound.getSound(), holder.binding);
-        });
 
         if (selectedPosition == position) {
             holder.binding.choose.setVisibility(View.VISIBLE);
@@ -90,9 +85,5 @@ public class SoundAdapter extends RecyclerView.Adapter<SoundAdapter.ItemViewHold
         void clickItem(int position, Sound sound);
     }
 
-    public interface PlaySound {
-        void playSound(int soundResId,ItemSoundBinding binding);
-
-    }
 }
 

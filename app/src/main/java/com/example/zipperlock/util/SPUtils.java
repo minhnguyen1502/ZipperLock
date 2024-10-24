@@ -17,6 +17,7 @@ public class SPUtils {
     public static final String SOUND_OPEN = "SOUND_OPEN";
     public static final String SOUND_ZIPPER = "SOUND_ZIPPER";
     public static final String BG_PER = "BG_PER";
+    public static final String FIRST = "FIRST";
 
 
     public static SharedPreferences getPref(Context context) {

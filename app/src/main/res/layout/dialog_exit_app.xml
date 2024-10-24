@@ -21,7 +21,8 @@
             android:ellipsize="end"
             android:includeFontPadding="false"
             android:singleLine="true"
-            android:text="@string/quit"
+            android:fontFamily="@font/suez_one_regular"
+            android:text="@string/quit_app"
             android:textColor="@color/black"
             android:textSize="@dimen/_16ssp" />
 
@@ -33,6 +34,7 @@
             android:gravity="center"
             android:includeFontPadding="false"
             android:text="@string/are_you_sure_want_to_quit_app"
+            android:fontFamily="@font/roboto_regular_400"
             android:textColor="@color/black"
             android:textSize="@dimen/_11ssp" />
 
@@ -55,7 +57,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_toStartOf="@+id/view_center"
-                android:background="@drawable/bg_view_32">
+                android:background="@drawable/bg_btn_cancel">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -65,9 +67,11 @@
                     android:ellipsize="end"
                     android:includeFontPadding="false"
                     android:singleLine="true"
+                    android:fontFamily="@font/roboto_medium_500"
+                    android:textStyle="bold"
                     android:text="@string/cancel"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/_10ssp" />
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -76,8 +80,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_toEndOf="@+id/view_center"
-                android:backgroundTint="#d82d25"
-                android:background="@drawable/bg_view_32">
+                android:background="@drawable/bg_btn_discard">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -86,10 +89,13 @@
                     android:layout_marginVertical="@dimen/_8sdp"
                     android:ellipsize="end"
                     android:includeFontPadding="false"
+                    android:textStyle="bold"
+
                     android:singleLine="true"
                     android:text="@string/quit"
+                    android:fontFamily="@font/roboto_medium_500"
                     android:textColor="#FCFCFC"
-                    android:textSize="@dimen/_10ssp" />
+                    android:textSize="16sp" />
             </RelativeLayout>
         </RelativeLayout>
 

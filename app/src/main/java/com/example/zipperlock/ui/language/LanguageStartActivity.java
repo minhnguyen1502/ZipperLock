@@ -42,7 +42,7 @@ public class LanguageStartActivity extends BaseActivity<ActivityLanguageStartBin
         binding.ivCheck.setOnClickListener(view -> {
 
             if (codeLang.isEmpty()) {
-                Toast.makeText(LanguageStartActivity.this,"Please choose your language", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LanguageStartActivity.this, getString(R.string.please_choose_your_language), Toast.LENGTH_SHORT).show();
             } else {
                 SystemUtil.saveLocale(getBaseContext(), codeLang);
 //                Utils.setLanguageSelected(true);

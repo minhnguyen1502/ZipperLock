@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.zipperlock.databinding.ItemBackgroundBinding;
 import com.example.zipperlock.databinding.ItemHomeBinding;
 import com.example.zipperlock.ui.item.background.model.Background;
@@ -42,7 +43,9 @@ public class BackgroundAdapter extends RecyclerView.Adapter<BackgroundAdapter.It
     @Override
     public void onBindViewHolder(@NonNull ItemViewHolder holder, @SuppressLint("RecyclerView") int position) {
         Background background = listItem.get(position);
-        holder.binding.img.setImageResource(background.getImg());
+        Glide.with(context)
+                .load(background.getImg())  
+                .into(holder.binding.img);
         if (selectedPosition == position) {
             holder.binding.choose.setVisibility(View.VISIBLE);
         } else {

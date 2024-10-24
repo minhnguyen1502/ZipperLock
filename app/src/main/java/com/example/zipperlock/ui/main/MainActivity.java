@@ -16,6 +16,7 @@ import android.provider.Settings;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -46,9 +47,11 @@ import com.example.zipperlock.ui.preview.PreviewActivity;
 import com.example.zipperlock.ui.setting.SettingActivity;
 import com.example.zipperlock.util.SPUtils;
 import com.example.zipperlock.util.SystemUtil;
+import com.example.zipperlock.util.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class MainActivity extends BaseActivity<ActivityMainBinding> {
     private List<ItemModel> listItems;
@@ -71,6 +74,18 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
 
     @Override
     public void initView() {
+        boolean isFirstOpenApp = SPUtils.getBoolean(this, SPUtils.FIRST, true);
+
+        if (isFirstOpenApp) {
+            SPUtils.setInt(this, SPUtils.BG, R.drawable.img_bg_01);
+            SPUtils.setInt(this, SPUtils.ZIPPER, R.drawable.img_zipper_list_1);
+            SPUtils.setInt(this, SPUtils.ROW, R.drawable.img_row_01);
+            SPUtils.setInt(this, SPUtils.ROW_RIGHT, R.drawable.img_row_r_1);
+            SPUtils.setInt(this, SPUtils.ROW_LEFT, R.drawable.img_row_l_1);
+//            SPUtils.setInt(this, SPUtils.SOUND_ZIPPER, sound_zipper);
+//            SPUtils.setInt(this, SPUtils.SOUND_OPEN, sound_open);
+            SPUtils.setBoolean(this, SPUtils.FIRST, false);
+        }
         countStorage = SPUtils.getInt(this, SPUtils.STORAGE, 0);
         countNotification = SPUtils.getInt(this, SPUtils.NOTIFICATION, 0);
         LockScreen.getInstance().init(this, true);
@@ -179,10 +194,10 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
 
     public void XiaomiBackGroundPapWindowsPermission() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Permission");
-        builder.setMessage("please allow permission display pop up windows while running in the background");
+        builder.setTitle(R.string.permission);
+        builder.setMessage(R.string.please_allow_permission_display_pop_up_windows_while_running_in_the_background_and_show_on_lock_screen);
         builder.setCancelable(true);
-        builder.setPositiveButton("Setting", (dialogInterface, i) -> {
+        builder.setPositiveButton(R.string.setting, (dialogInterface, i) -> {
             dialogInterface.cancel();
             SharedPreferences.Editor edit = f993sp.edit();
             edit.putBoolean("POP_WINDOWS_PERMISSION", true);
@@ -203,17 +218,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
 
     @Override
     public void bindView() {
-        binding.ivSetting.setOnClickListener(v -> {
-            if (checkOverlayPermission() && checkNotificationPermission() && checkStoragePermission()) {
-
-                startActivity(new Intent(this, SettingActivity.class));
-            } else {
-                if (!isShowDialogBottom) {
-                    showDialogBottomPer();
-
-                }
-            }
-        });
+        binding.ivSetting.setOnClickListener(v -> startActivity(new Intent(this, SettingActivity.class)));
         binding.btnPreview.setOnClickListener(v -> {
             if (checkOverlayPermission() && checkNotificationPermission() && checkStoragePermission()) {
                 startActivity(new Intent(this, PreviewActivity.class));
@@ -226,16 +231,19 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
         });
         binding.ivEnable.setOnClickListener(v -> {
             if (checkOverlayPermission() && checkNotificationPermission() && checkStoragePermission()) {
-
-                isLock = !isLock;
-                if (isLock) {
-                    LockScreen.getInstance().active();
-                    binding.ivEnable.setImageResource(R.drawable.img_sw_enable_on);
-
+                if (ModelName.equals("Xiaomi") && !f993sp.getBoolean("POP_WINDOWS_PERMISSION", false)) {
+                    XiaomiBackGroundPapWindowsPermission();
                 } else {
-                    LockScreen.getInstance().deactivate();
-                    binding.ivEnable.setImageResource(R.drawable.img_sw_enable_off);
+                    isLock = !isLock;
+                    if (isLock) {
+                        LockScreen.getInstance().active();
+                        binding.ivEnable.setImageResource(R.drawable.img_sw_enable_on);
 
+                    } else {
+                        LockScreen.getInstance().deactivate();
+                        binding.ivEnable.setImageResource(R.drawable.img_sw_enable_off);
+
+                    }
                 }
             } else {
                 if (!isShowDialogBottom) {
@@ -273,7 +281,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
 
         bindingPer.step2.setOnClickListener(v -> {
             if (checkNotificationPermission()) {
-                bindingPer.step2.setTextColor(R.color.white);
+                bindingPer.step2.setTextColor(ContextCompat.getColor(this, R.color.white));
                 bindingPer.step1.setBackgroundResource(R.drawable.bg_btn_status_3);
                 bindingPer.step3.setBackgroundResource(R.drawable.bg_btn_status_1);
                 bindingPer.step2.setBackgroundResource(R.drawable.bg_btn_status_2);
@@ -289,8 +297,8 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
         });
         bindingPer.step3.setOnClickListener(v -> {
             if (checkOverlayPermission()) {
-                bindingPer.step2.setTextColor(R.color.white);
-                bindingPer.step3.setTextColor(R.color.white);
+                bindingPer.step2.setTextColor(ContextCompat.getColor(this, R.color.white));
+                bindingPer.step3.setTextColor(ContextCompat.getColor(this, R.color.white));
                 bindingPer.step1.setBackgroundResource(R.drawable.bg_btn_status_3);
                 bindingPer.step3.setBackgroundResource(R.drawable.bg_btn_status_2);
                 bindingPer.step2.setBackgroundResource(R.drawable.bg_btn_status_3);
@@ -306,9 +314,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
 
         });
         bindingPer.ivSwOverlay.setOnClickListener(v -> {
-            if (ModelName.equals("Xiaomi") && !f993sp.getBoolean("POP_WINDOWS_PERMISSION", false)) {
-                XiaomiBackGroundPapWindowsPermission();
-            } else if (!checkOverlayPermission()) {
+            if (!checkOverlayPermission()) {
                 showDialogGotoSetting(3);
             }
         });
@@ -353,7 +359,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
             if (checkStoragePermission()) {
                 bindingPer.ivSwMedia.setImageResource(R.drawable.ic_sw_dialog_on);
             } else {
-                bindingPer.ivSwMedia.setImageResource(R.drawable.img_sw_off);
+                bindingPer.ivSwMedia.setImageResource(R.drawable.ic_sw_dialog_off);
             }
         }
 
@@ -365,7 +371,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
             if (checkOverlayPermission()) {
                 bindingPer.ivSwOverlay.setImageResource(R.drawable.ic_sw_dialog_on);
             } else {
-                bindingPer.ivSwOverlay.setImageResource(R.drawable.img_sw_off);
+                bindingPer.ivSwOverlay.setImageResource(R.drawable.ic_sw_dialog_off);
             }
         }
     }
@@ -439,7 +445,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
                 bindingPer.ivSwNoti.setImageResource(R.drawable.ic_sw_dialog_on);
 
             } else {
-                bindingPer.ivSwNoti.setImageResource(R.drawable.img_sw_off);
+                bindingPer.ivSwNoti.setImageResource(R.drawable.ic_sw_dialog_off);
             }
         }
 
@@ -561,7 +567,37 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
 
     @Override
     public void onBack() {
-        finishThisActivity();
+        if (!isShow) {
+            confirmQuitApp();
+        }
     }
+    private boolean isShow = false;
 
+    private void confirmQuitApp() {
+        isShow = true;
+        Dialog dialog = new Dialog(this);
+
+        dialog.setContentView(R.layout.dialog_exit_app);
+
+        Objects.requireNonNull(dialog.getWindow()).setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        RelativeLayout cancel = dialog.findViewById(R.id.btn_cancel_quit_app);
+        RelativeLayout quit = dialog.findViewById(R.id.btn_quit_app);
+        quit.setOnClickListener(v -> {
+            finishAffinity();
+            dialog.dismiss();
+            isShow = false;
+        });
+
+        cancel.setOnClickListener(v -> {
+            dialog.dismiss();
+            isShow = false;
+        });
+
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
+    }
 }

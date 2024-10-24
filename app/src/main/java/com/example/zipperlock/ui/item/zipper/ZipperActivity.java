@@ -27,6 +27,7 @@ public class ZipperActivity extends BaseActivity<ActivityListItemBinding> {
 
     @Override
     public void initView() {
+        binding.title.setText(R.string.zipper_style);
         listItems = new ArrayList<>();
         listItems.add(new Zipper(R.drawable.img_zipper_list_1));
         listItems.add(new Zipper(R.drawable.img_zipper_list_2));

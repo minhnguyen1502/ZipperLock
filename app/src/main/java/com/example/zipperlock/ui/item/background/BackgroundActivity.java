@@ -27,6 +27,7 @@ public class BackgroundActivity extends BaseActivity<ActivityListItemBinding> {
 
     @Override
     public void initView() {
+        binding.title.setText(R.string.background);
         currentBackground = SPUtils.getInt(this, SPUtils.BG, -1);
         listItems = new ArrayList<>();
         listItems.add(new Background(R.drawable.img_bg_01));

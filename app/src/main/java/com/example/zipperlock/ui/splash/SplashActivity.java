@@ -1,6 +1,7 @@
 package com.example.zipperlock.ui.splash;
 
 import android.os.Handler;
+import android.widget.Toast;
 
 import com.example.zipperlock.R;
 import com.example.zipperlock.base.BaseActivity;
@@ -20,6 +21,7 @@ public class SplashActivity extends BaseActivity<ActivitySplashBinding> {
     @Override
     public void initView() {
         SharePrefUtils.increaseCountOpenApp(this);
+
 
         new Handler().postDelayed(() -> {
             startNextActivity(LanguageStartActivity.class, null);

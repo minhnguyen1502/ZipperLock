@@ -82,5 +82,29 @@
     <string name="permission_is_required_to_proceed_to_the_next_step">अगले चरण के लिए अनुमति आवश्यक है</string>
     <string name="various_zipper_styles">विभिन्न जिपर शैलियाँ</string>
     <string name="realistic_zipper_opening_sound">यथार्थवादी जिपर खोलने की ध्वनि</string>
+    <string name="please_allow_permission_display_pop_up_windows_while_running_in_the_background_and_show_on_lock_screen">कृपया अनुमति दें \'पृष्ठभूमि में चलते समय पॉप-अप विंडो प्रदर्शित करें\' और \'लॉक स्क्रीन पर दिखाएँ\'</string>
+    <string name="setting">सेटिंग</string>
+    <string name="image">छवि</string>
+    <string name="loading_failed">लोड करना विफल</string>
+    <string name="sound_not_found">ध्वनि नहीं मिली</string>
+    <string name="color_not_found">रंग नहीं मिला</string>
+    <string name="image_not_found">छवि नहीं मिली</string>
+    <string name="name_not_found">नाम नहीं मिला</string>
+    <string name="type_not_found">प्रकार नहीं मिला</string>
+    <string name="failed_to_set_wallpaper">वॉलपेपर सेट करने में विफल</string>
+    <string name="lock_screen_wallpaper_not_supported_on_your_device">आपके डिवाइस पर लॉक स्क्रीन वॉलपेपर समर्थित नहीं है</string>
+    <string name="failed_to_set_lock_screen_wallpaper">लॉक स्क्रीन वॉलपेपर सेट करने में विफल</string>
+    <string name="failed_to_set_home_screen_wallpaper">होम स्क्रीन वॉलपेपर सेट करने में विफल</string>
+    <string name="wallpaper_not_found">वॉलपेपर नहीं मिला</string>
+    <string name="please_choose_your_language">कृपया अपनी भाषा चुनें</string>
+    <string name="discard_changes">परिवर्तन त्यागें?</string>
+    <string name="you_have_unsaved_changes_are_you_sure_you_want_to_discard_all">आपके पास बिना सहेजे हुए परिवर्तन हैं। क्या आप सभी को त्यागना चाहते हैं?</string>
+    <string name="discard">त्यागें</string>
+    <string name="quit_app">ऐप छोड़ें?</string>
+    <string name="loading">लोड हो रहा है...</string>
+    <string name="stay">रुकें</string>
+    <string name="home_screen">होम स्क्रीन</string>
+    <string name="lock_screen">लॉक स्क्रीन</string>
+    <string name="home_screen_and_lock_screen">होम स्क्रीन और लॉक स्क्रीन</string>
 
 </resources>

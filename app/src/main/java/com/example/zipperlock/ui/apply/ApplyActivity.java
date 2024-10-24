@@ -21,6 +21,7 @@ import com.example.zipperlock.databinding.DialogPermissionBinding;
 import com.example.zipperlock.ui.item.background.BackgroundActivity;
 import com.example.zipperlock.ui.item.row.RowActivity;
 import com.example.zipperlock.ui.item.sound.SoundActivity;
+import com.example.zipperlock.ui.item.sound.SoundTypeActivity;
 import com.example.zipperlock.ui.item.zipper.ZipperActivity;
 import com.example.zipperlock.ui.main.MainActivity;
 import com.example.zipperlock.ui.preview.PreviewActivity;
@@ -125,7 +126,7 @@ public class ApplyActivity extends BaseActivity<ActivityApplyBinding> {
         });
         binding.btnBg.setOnClickListener(v -> startActivity(new Intent(this, BackgroundActivity.class)));
         binding.btnRow.setOnClickListener(v -> startActivity(new Intent(this, RowActivity.class)));
-        binding.btnSound.setOnClickListener(v -> startActivity(new Intent(this, SoundActivity.class)));
+        binding.btnSound.setOnClickListener(v -> startActivity(new Intent(this, SoundTypeActivity.class)));
         binding.btnZip.setOnClickListener(v -> startActivity(new Intent(this, ZipperActivity.class)));
     }
 
@@ -175,10 +176,8 @@ public class ApplyActivity extends BaseActivity<ActivityApplyBinding> {
         SPUtils.setInt(this, SPUtils.ROW_LEFT, row_l);
         if (type == 0){
             SPUtils.setInt(this, SPUtils.SOUND_ZIPPER, sound_zipper);
-            Toast.makeText(this, "save sound zip", Toast.LENGTH_SHORT).show();
         }else {
             SPUtils.setInt(this, SPUtils.SOUND_OPEN, sound_open);
-            Toast.makeText(this, "save sound open", Toast.LENGTH_SHORT).show();
         }
         startActivity(new Intent(this, SuccessfullyActivity.class));
     }

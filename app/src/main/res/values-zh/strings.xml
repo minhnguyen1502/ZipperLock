@@ -82,5 +82,29 @@
     <string name="permission_is_required_to_proceed_to_the_next_step">需要权限才能继续进行下一步</string>
     <string name="various_zipper_styles">多种拉链样式</string>
     <string name="realistic_zipper_opening_sound">逼真的拉链打开声音</string>
+    <string name="please_allow_permission_display_pop_up_windows_while_running_in_the_background_and_show_on_lock_screen">请允许权限“后台运行时显示弹出窗口”和“在锁屏上显示”</string>
+    <string name="setting">设置</string>
+    <string name="image">图片</string>
+    <string name="loading_failed">加载失败</string>
+    <string name="sound_not_found">未找到声音</string>
+    <string name="color_not_found">未找到颜色</string>
+    <string name="image_not_found">未找到图片</string>
+    <string name="name_not_found">未找到名称</string>
+    <string name="type_not_found">未找到类型</string>
+    <string name="failed_to_set_wallpaper">设置壁纸失败</string>
+    <string name="lock_screen_wallpaper_not_supported_on_your_device">您的设备不支持锁屏壁纸</string>
+    <string name="failed_to_set_lock_screen_wallpaper">设置锁屏壁纸失败</string>
+    <string name="failed_to_set_home_screen_wallpaper">设置主屏幕壁纸失败</string>
+    <string name="wallpaper_not_found">未找到壁纸</string>
+    <string name="please_choose_your_language">请选择您的语言</string>
+    <string name="discard_changes">放弃更改？</string>
+    <string name="you_have_unsaved_changes_are_you_sure_you_want_to_discard_all">您有未保存的更改。您确定要放弃所有更改吗？</string>
+    <string name="discard">放弃</string>
+    <string name="quit_app">退出应用程序？</string>
+    <string name="loading">加载中...</string>
+    <string name="stay">停留</string>
+    <string name="home_screen">主屏幕</string>
+    <string name="lock_screen">锁屏</string>
+    <string name="home_screen_and_lock_screen">主屏幕和锁屏</string>
 
 </resources>

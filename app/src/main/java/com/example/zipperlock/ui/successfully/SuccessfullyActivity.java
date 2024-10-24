@@ -20,13 +20,13 @@ public class SuccessfullyActivity extends BaseActivity<ActivitySuccessBinding> {
     @Override
     public void bindView() {
         binding.btnBack.setOnClickListener(v -> {
-            startActivity(new Intent(this, MainActivity.class));
-            finishAffinity();
+           onBack();
         });
     }
 
     @Override
     public void onBack() {
-
+        startActivity(new Intent(this, MainActivity.class));
+        finishAffinity();
     }
 }

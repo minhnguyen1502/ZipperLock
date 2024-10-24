@@ -82,5 +82,29 @@
     <string name="permission_is_required_to_proceed_to_the_next_step">É necessário permissão para prosseguir para a próxima etapa</string>
     <string name="various_zipper_styles">Vários estilos de Zíper</string>
     <string name="realistic_zipper_opening_sound">Som realista ao abrir o Zíper</string>
+    <string name="please_allow_permission_display_pop_up_windows_while_running_in_the_background_and_show_on_lock_screen">Por favor, permita a permissão \'Exibir janelas pop-up enquanto executa em segundo plano\' e \'Mostrar na tela de bloqueio\'</string>
+    <string name="setting">Configuração</string>
+    <string name="image">Imagem</string>
+    <string name="loading_failed">Falha ao carregar</string>
+    <string name="sound_not_found">Som não encontrado</string>
+    <string name="color_not_found">Cor não encontrada</string>
+    <string name="image_not_found">Imagem não encontrada</string>
+    <string name="name_not_found">Nome não encontrado</string>
+    <string name="type_not_found">Tipo não encontrado</string>
+    <string name="failed_to_set_wallpaper">Falha ao definir o papel de parede</string>
+    <string name="lock_screen_wallpaper_not_supported_on_your_device">O papel de parede da tela de bloqueio não é suportado no seu dispositivo</string>
+    <string name="failed_to_set_lock_screen_wallpaper">Falha ao definir o papel de parede da tela de bloqueio</string>
+    <string name="failed_to_set_home_screen_wallpaper">Falha ao definir o papel de parede da tela inicial</string>
+    <string name="wallpaper_not_found">Papel de parede não encontrado</string>
+    <string name="please_choose_your_language">Por favor, escolha seu idioma</string>
+    <string name="discard_changes">Descartar alterações?</string>
+    <string name="you_have_unsaved_changes_are_you_sure_you_want_to_discard_all">Você tem alterações não salvas. Tem certeza de que deseja descartar tudo?</string>
+    <string name="discard">Descartar</string>
+    <string name="quit_app">Sair do aplicativo?</string>
+    <string name="loading">Carregando...</string>
+    <string name="stay">Ficar</string>
+    <string name="home_screen">Tela inicial</string>
+    <string name="lock_screen">Tela de bloqueio</string>
+    <string name="home_screen_and_lock_screen">Tela inicial e tela de bloqueio</string>
 
 </resources>
